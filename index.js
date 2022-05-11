@@ -6,11 +6,55 @@ const playerImage = new Image()
 canvas.width = 1024
 canvas.height = 576
 
+const offset = {
+    x: 0,
+    y: -325
+}
+
+const collisionsMap = []
+for (let i = 0; i < collisions.length; i += 30) {
+    collisionsMap.push(collisions.slice(i, 30 + i))
+}
+
+class Boundary {
+    static width = 72
+    static height = 72
+    constructor({ position }) {
+        this.position = position,
+            this.width = 72,
+            this.height = 72
+    }
+
+    draw() {
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const boundaries = []
+collisionsMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 1025)
+            boundaries.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            )
+    })
+})
+
+console.log(boundaries)
+
 c.fillStyle = 'white'
 c.fillRect(0, 0, canvas.width, canvas.height)
 
 map1.src = './img/map1.png'
 playerImage.src = './img/playerDown.png'
+
+
 
 class Sprite {
     constructor({ position, velocity, image }) {
@@ -23,10 +67,11 @@ class Sprite {
     }
 }
 
+
 const background = new Sprite({
     position: {
-        x: 0,
-        y: -300
+        x: offset.x,
+        y: offset.y
     },
     image: map1
 })
@@ -58,7 +103,9 @@ const keys = {
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw()
-
+    boundaries.forEach(boundary => {
+        boundary.draw()
+    })
     c.drawImage(
         playerImage,
         0,
