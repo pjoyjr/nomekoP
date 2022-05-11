@@ -1,34 +1,20 @@
 const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
-const map1 = new Image()
-const playerImage = new Image()
-
 canvas.width = 1024
 canvas.height = 576
+const c = canvas.getContext('2d')
+c.fillStyle = 'white'
+c.fillRect(0, 0, canvas.width, canvas.height)
 
+//Offset for start position
 const offset = {
     x: 0,
     y: -325
 }
 
+//Create Collions Map
 const collisionsMap = []
 for (let i = 0; i < collisions.length; i += 30) {
     collisionsMap.push(collisions.slice(i, 30 + i))
-}
-
-class Boundary {
-    static width = 72
-    static height = 72
-    constructor({ position }) {
-        this.position = position,
-            this.width = 72,
-            this.height = 72
-    }
-
-    draw() {
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
 }
 
 const boundaries = []
@@ -46,27 +32,11 @@ collisionsMap.forEach((row, i) => {
     })
 })
 
-console.log(boundaries)
-
-c.fillStyle = 'white'
-c.fillRect(0, 0, canvas.width, canvas.height)
-
+//Create Map and Player
+const map1 = new Image()
 map1.src = './img/map1.png'
+const playerImage = new Image()
 playerImage.src = './img/playerDown.png'
-
-
-
-class Sprite {
-    constructor({ position, velocity, image }) {
-        this.position = position
-        this.image = image
-    }
-
-    draw() {
-        c.drawImage(this.image, this.position.x, this.position.y)
-    }
-}
-
 
 const background = new Sprite({
     position: {
@@ -84,7 +54,7 @@ const player = new Sprite({
     image: playerImage
 })
 
-
+//keystrokes for actionlistener
 const keys = {
     w: {
         pressed: false
@@ -124,7 +94,7 @@ function animate() {
 }
 animate()
 
-
+//Action Listener
 let lastKey = ''
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
