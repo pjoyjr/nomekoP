@@ -37,6 +37,8 @@ const map1 = new Image()
 map1.src = './img/map1.png'
 const playerImage = new Image()
 playerImage.src = './img/playerDown.png'
+const foregroundImage = new Image()
+foregroundImage.src = './img/foreground.png'
 
 const background = new Sprite({
     position: {
@@ -44,6 +46,14 @@ const background = new Sprite({
         y: offset.y
     },
     image: map1
+})
+
+const foreground = new Sprite({
+    position: {
+        x: offset.x,
+        y: offset.y
+    },
+    image: foregroundImage
 })
 
 const player = new Sprite({
@@ -74,7 +84,7 @@ const keys = {
 }
 
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foreground]
 
 function collistionTest({ rect1, rect2 }) {
     return (rect1.position.x + rect1.width >= rect2.position.x &&
@@ -89,9 +99,9 @@ function animate() {
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
-
     })
     player.draw()
+    foreground.draw()
 
 
     let moving = true
