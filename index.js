@@ -5,16 +5,41 @@ const c = canvas.getContext('2d')
 c.fillStyle = 'white'
 c.fillRect(0, 0, canvas.width, canvas.height)
 
+gsap.to('#overlappingDiv', {
+    opacity: 1
+})
+
 //Offset for start position
 const offset = {
     x: 0,
     y: -325
 }
 
+//Create Battle Zones Map
+const battleZonesMap = []
+for (let i = 0; i < battleZonesData.length; i += 30) {
+    battleZonesMap.push(battleZonesData.slice(i, 30 + i))
+}
+
+const battleZones = []
+battleZonesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 1025)
+            battleZones.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            )
+    })
+})
+
 //Create Collions Map
 const collisionsMap = []
-for (let i = 0; i < collisions.length; i += 30) {
-    collisionsMap.push(collisions.slice(i, 30 + i))
+for (let i = 0; i < collisionsData.length; i += 30) {
+    collisionsMap.push(collisionsData.slice(i, 30 + i))
 }
 
 const boundaries = []
@@ -97,7 +122,7 @@ const keys = {
 }
 
 
-const movables = [background, ...boundaries, foreground]
+const movables = [background, ...boundaries, foreground, ...battleZones]
 
 function collistionTest({ rect1, rect2 }) {
     return (rect1.position.x + rect1.width >= rect2.position.x &&
@@ -107,18 +132,47 @@ function collistionTest({ rect1, rect2 }) {
     )
 }
 
+const battle = {
+    initiated: false
+}
+
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
     })
+    battleZones.forEach(battleZone => {
+        battleZone.draw()
+    })
     player.draw()
     foreground.draw()
 
-
     let moving = true
     player.moving = false
+
+    if (battle.initiated) return
+
+    //Start a battle
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        for (let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i]
+            const overlappingArea = (Math.min(player.position.x + player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x)) * (Math.min(player.position.y + player.height, battleZone.position.y + battleZone.height) - Math.max(player.position.y, battleZone.position.y))
+
+            if (
+                collistionTest({
+                    rect1: player,
+                    rect2: battleZone
+                }) &&
+                overlappingArea > player.width * player.height / 2 &&
+                Math.random() < .002
+            ) {
+                battle.initiated = true
+                break
+            }
+        }
+    }
+
     if (keys.w.pressed && lastKey === 'w') {
         player.moving = true
         player.image = player.sprites.up
