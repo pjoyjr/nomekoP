@@ -322,7 +322,7 @@ const emby = new Sprite({
     animate: true
 })
 
-const daggle = new Sprite({
+const draggle = new Sprite({
     position: {
         x: 800,
         y: 100
@@ -332,17 +332,32 @@ const daggle = new Sprite({
         max: 4,
         hold: 25
     },
-    animate: true
+    animate: true,
+    isEnemy: true
 })
 
 function animateBattle() {
     const animateID = window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
     emby.draw()
-    daggle.draw()
+    draggle.draw()
 
 }
 animateBattle()
+
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener(('click'), () => {
+        emby.attack({
+            attack: {
+                name: 'tackle',
+                damage: 10,
+                type: 'normal'
+            },
+            recipient: draggle
+
+        })
+    })
+})
 
 //Action Listener
 let lastKey = ''
