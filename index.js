@@ -5,10 +5,6 @@ const c = canvas.getContext('2d')
 c.fillStyle = 'white'
 c.fillRect(0, 0, canvas.width, canvas.height)
 
-gsap.to('#overlappingDiv', {
-    opacity: 1
-})
-
 //Offset for start position
 const offset = {
     x: 0,
@@ -137,7 +133,7 @@ const battle = {
 }
 
 function animate() {
-    window.requestAnimationFrame(animate)
+    const animationID = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
@@ -159,15 +155,34 @@ function animate() {
             const battleZone = battleZones[i]
             const overlappingArea = (Math.min(player.position.x + player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x)) * (Math.min(player.position.y + player.height, battleZone.position.y + battleZone.height) - Math.max(player.position.y, battleZone.position.y))
 
-            if (
-                collistionTest({
+            if (collistionTest({
                     rect1: player,
                     rect2: battleZone
                 }) &&
                 overlappingArea > player.width * player.height / 2 &&
-                Math.random() < .002
+                Math.random() < .004
             ) {
+                window.cancelAnimationFrame(animationID)
                 battle.initiated = true
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: .6,
+                    onComplete() {
+                        gsap.to('#overlappingDiv', {
+                            opacity: 1,
+                            duration: .6,
+                            onComplete() {
+                                animateBattle()
+                                gsap.to('#overlappingDiv', {
+                                    opacity: 0,
+                                    duration: .6
+                                })
+                            }
+                        })
+                    }
+                })
                 break
             }
         }
@@ -276,6 +291,22 @@ function animate() {
     }
 }
 animate()
+
+const battleBackgroundImage = new Image()
+battleBackgroundImage.src = "./img/battleBackground.png"
+const battleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    image: battleBackgroundImage
+})
+
+function animateBattle() {
+    const animateID = window.requestAnimationFrame(animateBattle)
+    battleBackground.draw()
+
+}
 
 //Action Listener
 let lastKey = ''
