@@ -336,30 +336,31 @@ const draggle = new Sprite({
     isEnemy: true
 })
 
+const renderedSprites = [draggle, emby]
+
 function animateBattle() {
     const animateID = window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
-    emby.draw()
-    draggle.draw()
 
+    renderedSprites.forEach((sprite) => {
+        sprite.draw()
+    })
 }
 animateBattle()
 
+//Button Action Listener
 document.querySelectorAll('button').forEach((button) => {
-    button.addEventListener(('click'), () => {
+    button.addEventListener(('click'), (e) => {
+        const selectedAttack = e.currentTarget.innerHTML
         emby.attack({
-            attack: {
-                name: 'tackle',
-                damage: 10,
-                type: 'normal'
-            },
-            recipient: draggle
-
+            attack: attacks[selectedAttack],
+            recipient: draggle,
+            renderedSprites
         })
     })
 })
 
-//Action Listener
+//Key Action Listener
 let lastKey = ''
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
