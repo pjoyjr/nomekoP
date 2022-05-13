@@ -114,7 +114,7 @@ function initBattle() {
 }
 
 function animateBattle() {
-    const battleAnimationID = window.requestAnimationFrame(animateBattle)
+    battleAnimationID = window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
 
     renderedSprites.forEach((sprite) => {

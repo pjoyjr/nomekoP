@@ -133,8 +133,10 @@ const battle = {
     initiated: false
 }
 
+let animationID
+
 function animate() {
-    const animationID = window.requestAnimationFrame(animate)
+    animationID = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
@@ -175,11 +177,11 @@ function animate() {
                             opacity: 1,
                             duration: 0.4,
                             onComplete() {
-                                initBattle()
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0,
                                     duration: 0.4
                                 })
+                                initBattle()
                             }
                         })
                     }
