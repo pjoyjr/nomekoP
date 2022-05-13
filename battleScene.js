@@ -44,6 +44,13 @@ document.querySelectorAll('button').forEach((button) => {
             renderedSprites
         })
 
+        if (draggle.hp <= 0) {
+            queue.push(() => {
+                draggle.faint()
+            })
+            return
+        }
+
         const randomAttack = draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
         queue.push(() => {
             draggle.attack({

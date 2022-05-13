@@ -27,6 +27,10 @@ class Monster extends Sprite {
         this.attacks = attacks
     }
 
+    faint() {
+        console.log('faint')
+    }
+
     attack({ attack, recipient, renderedSprites }) {
         document.querySelector('#battleDialog').style.display = 'block'
         document.querySelector('#battleDialog').innerHTML = this.name + ' used ' + attack.name
@@ -38,7 +42,7 @@ class Monster extends Sprite {
             rotation = -2.5
         }
 
-        this.hp -= attack.damage
+        recipient.hp -= attack.damage
 
         switch (attack.name) {
             case 'Fireball':
@@ -65,7 +69,7 @@ class Monster extends Sprite {
                     y: recipient.position.y,
                     onComplete: () => {
                         gsap.to(hpBar, {
-                            width: this.hp - attack.damage + '%'
+                            width: recipient.hp + '%'
                         })
                         tl3.to(recipient.position, {
                             x: recipient.position.x + 15,
@@ -103,7 +107,7 @@ class Monster extends Sprite {
                     onComplete: () => {
                         //successful hit, move enemy and substract hp
                         gsap.to(hpBar, {
-                            width: this.hp - attack.damage + '%'
+                            width: recipient.hp + '%'
 
                         })
                         tl2.to(recipient.position, {
