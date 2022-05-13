@@ -88,13 +88,24 @@
     border-top: 4px black solid;
     display: flex;
     ">
-        <div style="
+        <div id="battleDialog" style="
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right: 0;
+        background-color: white;
+        padding:12px;
+        display:none;
+        cursor: pointer;
+        ">
+            asdfdsaf
+        </div>
+        <div id="attacksBox" style="
         width: 66.66%;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         ">
-            <button>Tackle</button>
-            <button>Fireball</button>
         </div>
         <div style="
         display:flex;
@@ -112,6 +123,9 @@
 <script src="data/collisionsData.js"></script>
 <script src="data/battleZonesData.js"></script>
 <script src="data/attacks.js"></script>
+<script src="data/monsters.js"></script>
 <script src="class/Boundary.js"></script>
 <script src="class/Sprite.js"></script>
+<script src="class/Monster.js"></script>
 <script src="index.js"></script>
+<script src="battleScene.js"></script>
