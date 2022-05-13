@@ -53,6 +53,18 @@ document.querySelectorAll('button').forEach((button) => {
             })
         })
     })
+    button.addEventListener('mouseenter', (e) => {
+        const selectAttack = attacks[e.currentTarget.innerHTML]
+        document.querySelector('#attackType').innerHTML = selectAttack.type
+        document.querySelector('#attackType').style.color = selectAttack.color
+
+    })
+    button.addEventListener('mouseleave', (e) => {
+        const selectAttack = attacks[e.currentTarget.innerHTML]
+        document.querySelector('#attackType').innerHTML = 'Attack Type'
+        document.querySelector('#attackType').style.color = 'black'
+
+    })
 })
 
 document.querySelector('#battleDialog').addEventListener('click', (e) => {
