@@ -28,7 +28,13 @@ class Monster extends Sprite {
     }
 
     faint() {
-        console.log('faint')
+        document.querySelector('#battleDialog').innerHTML = this.name + ' fainted!'
+        gsap.to(this.position, {
+            y: this.position.y + 20
+        })
+        gsap.to(this, {
+            opacity: 0
+        })
     }
 
     attack({ attack, recipient, renderedSprites }) {

@@ -1,0 +1,108 @@
+* {
+    font-family: 'Orbitron', sans-serif;
+}
+
+body {
+    background-color: black;
+}
+
+h1 {
+    margin: 0;
+    font-size: 16px;
+}
+
+button {
+    border: 0;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+#gameContainer {
+    display: inline-block;
+    position: relative;
+}
+
+#attackMenu {
+    background-color: white;
+    height: 140px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 4px black solid;
+    display: flex;
+}
+
+#attackTypeDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33.33%;
+    border-left: 4px black solid;
+}
+
+#attacksBox {
+    width: 66.66%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#battleDialog {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 12px;
+    display: none;
+    cursor: pointer;
+}
+
+#battleUI {
+    display: none;
+}
+
+#enemyHPBar,
+#myHPBar {
+    height: 5px;
+    background-color: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#overlappingDiv {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.backHPBar {
+    height: 5px;
+    background-color: red;
+    margin-top: 10px;
+}
+
+.hpBar {
+    position: relative;
+}
+
+.hpMenu {
+    background-color: white;
+    width: 250;
+    position: absolute;
+    border: 4px black solid;
+    padding: 12px;
+}

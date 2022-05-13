@@ -2,130 +2,55 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        body {
-            background-color: black;
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 16px;
-        }
-        
-        button {
-            border: 0;
-            font-size: 16px;
-        }
-        
-        button:hover {
-            background-color: lightgray;
-            cursor: pointer;
-        }
-    </style>
+    <link href="css/styles.css" rel="stylesheet">
 </head>
-<div style="display: inline-block; position: relative;">
-    <!--For flashing screen-->
-    <div id="overlappingDiv" style="
-        background-color:red;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0;
-        pointer-events: none;
-        ">
-    </div>
-
-    <!-- Enemy HP bar-->
-    <div style="
-        background-color: white;
-        width:250;
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        border: 4px black solid;
-        padding: 12px;
-        ">
-        <h1>Draggle</h1>
-        <div style="position: relative;">
-            <div style="height: 5px; background-color: red; margin-top: 10px;"></div>
-            <div id="enemyHPBar" style="height: 5px; background-color: green; position: absolute; top: 0; left: 0; right: 0;"></div>
-        </div>
-    </div>
-
-    <!-- My HP bar-->
-    <div style="
-        background-color: white;
-        width:250;
-        position: absolute;
-        top: 330px;
-        right: 50px;
-        border: 4px black solid;
-        padding: 12px;
-        ">
-        <h1>Emby</h1>
-        <div style="position: relative;">
-            <div style="height: 5px; background-color: red; margin-top: 10px;"></div>
-            <div id="myHPBar" style="height: 5px; background-color: green; position: absolute; top: 0; left: 0; right: 0;"></div>
-        </div>
-    </div>
+<div id="gameContainer">
+    <!--For flashing/Black screen-->
+    <div id="overlappingDiv"></div>
 
     <!--Animation Script-->
     <canvas></canvas>
-    <!--Attack Menu-->
-    <div style="
-    background-color: white;
-    height: 140px;
-    position: absolute;
-    bottom: 0;
-    left:0;
-    right: 0;
-    border-top: 4px black solid;
-    display: flex;
-    ">
-        <div id="battleDialog" style="
-        position: absolute;
-        top:0;
-        bottom:0;
-        left:0;
-        right: 0;
-        background-color: white;
-        padding:12px;
-        display:none;
-        cursor: pointer;
-        ">
-            asdfdsaf
+    <!--Battle UI-->
+    <div id="battleUI">
+        <!-- Enemy HP bar-->
+        <div class="hpMenu" style="top: 50px; left: 50px;">
+            <h1>Draggle</h1>
+            <div class="hpBar">
+                <div class="backHPBar"></div>
+                <div id="enemyHPBar"></div>
+            </div>
         </div>
-        <div id="attacksBox" style="
-        width: 66.66%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        ">
+
+        <!-- My HP bar-->
+        <div class="hpMenu" style="top: 330px; right: 50px;">
+            <h1>Emby</h1>
+            <div class="hpBar">
+                <div class="backHPBar"></div>
+                <div id="myHPBar"></div>
+            </div>
         </div>
-        <div style="
-        display:flex;
-        align-items:center;
-        justify-content: center;
-        width: 33.33%;
-        border-left: 4px black solid;
-        ">
-            <h1 id="attackType">Attack Type</h1>
+
+        <!--Attack Menu-->
+        <div id="attackMenu">
+            <div id="battleDialog">
+            </div>
+            <div id="attacksBox">
+            </div>
+            <div id="attackTypeDiv">
+                <h1 id="attackType">Attack Type</h1>
+            </div>
         </div>
+
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="data/collisionsData.js"></script>
-<script src="data/battleZonesData.js"></script>
-<script src="data/attacks.js"></script>
-<script src="data/monsters.js"></script>
-<script src="class/Boundary.js"></script>
-<script src="class/Sprite.js"></script>
-<script src="class/Monster.js"></script>
-<script src="index.js"></script>
-<script src="battleScene.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js " integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin=" anonymous " referrerpolicy="no-referrer "></script>
+<script src="data/collisionsData.js "></script>
+<script src="data/battleZonesData.js "></script>
+<script src="data/attacks.js "></script>
+<script src="data/monsters.js "></script>
+<script src="class/Boundary.js "></script>
+<script src="class/Sprite.js "></script>
+<script src="class/Monster.js "></script>
+<script src="index.js "></script>
+<script src="battleScene.js "></script>

@@ -169,16 +169,16 @@ function animate() {
                     opacity: 1,
                     repeat: 3,
                     yoyo: true,
-                    duration: .6,
+                    duration: 0.4,
                     onComplete() {
                         gsap.to('#overlappingDiv', {
                             opacity: 1,
-                            duration: .6,
+                            duration: 0.4,
                             onComplete() {
-                                animateBattle()
+                                initBattle()
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0,
-                                    duration: .6
+                                    duration: 0.4
                                 })
                             }
                         })
@@ -291,7 +291,8 @@ function animate() {
         }
     }
 }
-//animate()
+
+animate()
 
 //Key Action Listener
 let lastKey = ''
