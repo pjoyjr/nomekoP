@@ -166,6 +166,9 @@ function animate() {
                 Math.random() < .004
             ) {
                 window.cancelAnimationFrame(animationID)
+                audio.map.stop()
+                audio.initBattle.play()
+                audio.battle.play()
                 battle.initiated = true
                 gsap.to('#overlappingDiv', {
                     opacity: 1,
@@ -298,7 +301,13 @@ animate()
 
 //Key Action Listener
 let lastKey = ''
+let musicPlaying = false
+
 window.addEventListener('keydown', (e) => {
+    if (!musicPlaying) {
+        audio.map.play()
+        musicPlaying = true
+    }
     switch (e.key) {
         case 'w':
             keys.w.pressed = true
