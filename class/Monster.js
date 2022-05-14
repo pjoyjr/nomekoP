@@ -5,9 +5,11 @@ class Monster extends Sprite {
         animate = false,
         rotation = 0,
         name,
+        orderNumber,
         hp = 100,
-        isEnemy,
-        attacks
+        type,
+        attacks,
+        isEnemy
     }) {
         super({
             frames,
@@ -16,7 +18,9 @@ class Monster extends Sprite {
             rotation
         })
         this.name = name
+        this.orderNumber = orderNumber
         this.hp = hp
+        this.type = type
         this.isEnemy = isEnemy
         this.attacks = attacks
     }
