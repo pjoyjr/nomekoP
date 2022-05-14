@@ -44,5 +44,10 @@ const audio = {
         src: 'audio/victory.wav',
         html5: true,
         volume: 0.1
+    }),
+    runAway: new Howl({
+        src: 'audio/runAway.wav',
+        html5: true,
+        volume: 0.1
     })
 }

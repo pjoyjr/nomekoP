@@ -11,6 +11,7 @@ let renderedSprites
 let battleAnimationID
 let myMonster, enemyMonster
 let queue
+let selectAttack
 
 function initBattle(myGuy, oppGuy) {
 
@@ -37,13 +38,21 @@ function initBattle(myGuy, oppGuy) {
         const button = document.createElement('button')
         button.innerHTML = attack.name
         document.querySelector('#attacksBox').append(button)
-    })
 
-    if (!battle.initiated) return
-        //Button Action Listener
-    document.querySelectorAll('button').forEach((button) => {
-        button.addEventListener(('click'), (e) => {
+        button.addEventListener('mouseenter', (e) => {
+            selectAttack = attacks[e.currentTarget.innerHTML]
             if (!battle.initiated) return
+            document.querySelector('#attackType').innerHTML = selectAttack.type
+            document.querySelector('#attackType').style.color = selectAttack.color
+        })
+        button.addEventListener('mouseleave', (e) => {
+            selectAttack = attacks[e.currentTarget.innerHTML]
+            if (!battle.initiated) return
+            document.querySelector('#attackType').innerHTML = 'Attack Type'
+            document.querySelector('#attackType').style.color = 'black'
+
+        })
+        button.addEventListener(('click'), (e) => {
             const selectedAttack = e.currentTarget.innerHTML
             myMonster.attack({
                 attack: attacks[selectedAttack],
@@ -73,7 +82,7 @@ function initBattle(myGuy, oppGuy) {
                     })
                 })
             }
-
+            //Enemy Attacks
             const randomAttack = enemyMonster.attacks[Math.floor(Math.random() * enemyMonster.attacks.length)]
             queue.push(() => {
                 enemyMonster.attack({
@@ -81,13 +90,10 @@ function initBattle(myGuy, oppGuy) {
                     recipient: myMonster,
                     renderedSprites
                 })
-
-
                 if (myMonster.hp <= 0) {
                     queue.push(() => {
                         myMonster.faint()
                     })
-
                     queue.push(() => {
                         gsap.to(('#overlappingDiv'), {
                             opacity: 1,
@@ -109,21 +115,6 @@ function initBattle(myGuy, oppGuy) {
                     })
                 }
             })
-        })
-
-        let selectAttack
-        button.addEventListener('mouseenter', (e) => {
-            selectAttack = attacks[e.currentTarget.innerHTML]
-            if (!battle.initiated) return
-            document.querySelector('#attackType').innerHTML = selectAttack.type
-            document.querySelector('#attackType').style.color = selectAttack.color
-        })
-        button.addEventListener('mouseleave', (e) => {
-            selectAttack = attacks[e.currentTarget.innerHTML]
-            if (!battle.initiated) return
-            document.querySelector('#attackType').innerHTML = 'Attack Type'
-            document.querySelector('#attackType').style.color = 'black'
-
         })
     })
     animateBattle()
