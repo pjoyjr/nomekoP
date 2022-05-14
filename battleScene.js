@@ -11,21 +11,25 @@ const battleBackground = new Sprite({
 
 let renderedSprites
 let battleAnimationID
-let myMonster, oppMonster
+let myMonster, enemyMonster
 let queue
 
-function initBattle() {
+function initBattle(myGuy, oppGuy) {
+
+    myMonster = new Monster(monsters[myGuy])
+    myMonster.setIsEnemy(false)
+    enemyMonster = new Monster(monsters[oppGuy])
+    enemyMonster.setIsEnemy(true)
+
     document.querySelector('#battleUI').style.display = 'block'
     document.querySelector('#battleDialog').style.display = 'none'
     document.querySelector('#enemyHPBar').style.width = '100%'
     document.querySelector('#myHPBar').style.width = '100%'
+    document.querySelector('#myMonsterName').innerHTML = myMonster.name
+    document.querySelector('#enemyMonsterName').innerHTML = enemyMonster.name
     document.querySelector('#attacksBox').replaceChildren()
 
-    myMonster = new Monster(monsters.Emby)
-    myMonster.setIsEnemy(false)
-    oppMonster = new Monster(monsters.Draggle)
-    oppMonster.setIsEnemy(true)
-    renderedSprites = [oppMonster, myMonster]
+    renderedSprites = [enemyMonster, myMonster]
     queue = []
 
     myMonster.attacks.forEach((attack) => {
@@ -41,13 +45,13 @@ function initBattle() {
             const selectedAttack = e.currentTarget.innerHTML
             myMonster.attack({
                 attack: attacks[selectedAttack],
-                recipient: oppMonster,
+                recipient: enemyMonster,
                 renderedSprites
             })
 
-            if (oppMonster.hp <= 0) {
+            if (enemyMonster.hp <= 0) {
                 queue.push(() => {
-                    oppMonster.faint()
+                    enemyMonster.faint()
                 })
 
                 queue.push(() => {
@@ -68,9 +72,9 @@ function initBattle() {
                 })
             }
 
-            const randomAttack = oppMonster.attacks[Math.floor(Math.random() * oppMonster.attacks.length)]
+            const randomAttack = enemyMonster.attacks[Math.floor(Math.random() * enemyMonster.attacks.length)]
             queue.push(() => {
-                oppMonster.attack({
+                enemyMonster.attack({
                     attack: randomAttack,
                     recipient: myMonster,
                     renderedSprites

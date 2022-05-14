@@ -238,6 +238,7 @@ function collistionTest({ rect1, rect2 }) {
     )
 }
 
+const myGuy = 'Emby'
 
 function checkBattleZones(animationID) {
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
@@ -271,7 +272,10 @@ function checkBattleZones(animationID) {
                                     opacity: 0,
                                     duration: 0.4
                                 })
-                                initBattle()
+
+                                const avalMonsters = Object.keys(monsters)
+                                const enemyGuy = avalMonsters[Math.floor(Math.random() * avalMonsters.length)]
+                                initBattle(myGuy, enemyGuy)
                             }
                         })
                     }
