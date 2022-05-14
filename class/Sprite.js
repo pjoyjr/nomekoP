@@ -1,25 +1,29 @@
 class Sprite {
     constructor({
         position = { x: 0, y: 0 },
-        image,
         frames = { max: 1, hold: 10 },
         sprites,
         animate = false,
         rotation = 0
     }) {
         this.position = position
-        this.image = new Image()
         this.frames = {...frames, val: 0, elapsed: 0 }
-        this.image.onload = () => {
-            this.width = this.image.width / this.frames.max
-            this.height = this.image.height
-        }
-        this.image.src = image.src
         this.animate = animate
         this.sprites = sprites
         this.opacity = 1
         this.rotation = rotation
+        this.width = 0
+        this.height = 0
+        this.image = new Image()
     }
+    setImage(image) {
+        this.image.src = image
+        this.image.onload = () => {
+            this.width = this.image.width / this.frames.max
+            this.height = this.image.height
+        }
+    }
+
     setPosition(position) {
         this.position = position
     }

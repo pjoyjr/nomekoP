@@ -1,6 +1,5 @@
 class Monster extends Sprite {
     constructor({
-        image,
         frames = { max: 1, hold: 10 },
         sprites,
         animate = false,
@@ -11,7 +10,6 @@ class Monster extends Sprite {
         attacks
     }) {
         super({
-            image,
             frames,
             sprites,
             animate,
@@ -26,18 +24,23 @@ class Monster extends Sprite {
         this.isEnemy = isEnemy
 
         let position
+        let image
         if (isEnemy) {
+            image = 'img/monsters/' + this.name + 'Front.png'
             position = {
                 x: 800,
                 y: 100
             }
             super.setPosition(position)
+            super.setImage(image)
         } else {
+            image = 'img/monsters/' + this.name + 'Back.png'
             position = {
                 x: 280,
                 y: 325
             }
             super.setPosition(position)
+            super.setImage(image)
         }
     }
     faint() {
@@ -68,14 +71,11 @@ class Monster extends Sprite {
         switch (attack.name) {
             case 'Fireball':
                 audio.initFireball.play()
-                const fireballImage = new Image()
-                fireballImage.src = './img/fireball.png'
                 const fireball = new Sprite({
                     position: {
                         x: this.position.x,
                         y: this.position.y
                     },
-                    image: fireballImage,
                     frames: {
                         max: 4,
                         hold: 10
@@ -83,6 +83,7 @@ class Monster extends Sprite {
                     animate: true,
                     rotation
                 })
+                fireball.setImage('./img/fireball.png')
                 renderedSprites.splice(1, 0, fireball)
 
                 const tl3 = gsap.timeline()

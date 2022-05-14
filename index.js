@@ -54,53 +54,39 @@ collisionsMap.forEach((row, i) => {
 })
 
 //Create Map and Player
-const map1 = new Image()
-map1.src = './img/map1.png'
-const foregroundImage = new Image()
-foregroundImage.src = './img/foreground.png'
-
-const playerDownImage = new Image()
-const playerUpImage = new Image()
-const playerLeftImage = new Image()
-const playerRightImage = new Image()
-playerDownImage.src = './img/playerDown.png'
-playerUpImage.src = './img/playerUp.png'
-playerLeftImage.src = './img/playerLeft.png'
-playerRightImage.src = './img/playerRight.png'
-
 const background = new Sprite({
     position: {
         x: offset.x,
         y: offset.y
-    },
-    image: map1
+    }
 })
+background.setImage('./img/map1.png')
 
 const foreground = new Sprite({
     position: {
         x: offset.x,
         y: offset.y
-    },
-    image: foregroundImage
+    }
 })
+foreground.setImage('./img/foreground.png')
 
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 192 / 4 / 2,
         y: canvas.height / 2 - 68 / 2,
     },
-    image: playerDownImage,
     frames: {
         max: 4,
         hold: 10
     },
     sprites: {
-        up: playerUpImage,
-        down: playerDownImage,
-        left: playerLeftImage,
-        right: playerRightImage
+        up: './img/playerUp.png',
+        down: './img/playerDown.png',
+        left: './img/playerLeft.png',
+        right: './img/playerRight.png'
     }
 })
+player.setImage('./img/playerDown.png')
 
 //keystrokes for actionlistener
 const keys = {
@@ -129,7 +115,7 @@ function playerMovement() {
 
     if (keys.w.pressed && lastKey === 'w') {
         player.animate = true
-        player.image = player.sprites.up
+        player.setImage(player.sprites.up)
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
@@ -154,7 +140,7 @@ function playerMovement() {
         }
     } else if (keys.a.pressed && lastKey === 'a') {
         player.animate = true
-        player.image = player.sprites.left
+        player.setImage(player.sprites.left)
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
@@ -179,7 +165,7 @@ function playerMovement() {
         }
     } else if (keys.s.pressed && lastKey === 's') {
         player.animate = true
-        player.image = player.sprites.down
+        player.setImage(player.sprites.down)
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
@@ -204,7 +190,7 @@ function playerMovement() {
         }
     } else if (keys.d.pressed && lastKey === 'd') {
         player.animate = true
-        player.image = player.sprites.right
+        player.setImage(player.sprites.right)
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (

@@ -1,13 +1,11 @@
 //Create Battle Objects
-const battleBackgroundImage = new Image()
-battleBackgroundImage.src = "./img/battleBackground.png"
 const battleBackground = new Sprite({
     position: {
         x: 0,
         y: 0
-    },
-    image: battleBackgroundImage
+    }
 })
+battleBackground.setImage("./img/battleBackground.png")
 
 let renderedSprites
 let battleAnimationID
