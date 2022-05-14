@@ -49,7 +49,12 @@ class Monster extends Sprite {
     }
     faint() {
         audio.battle.stop()
-        audio.victory.play()
+        if (this.isEnemy) {
+            audio.victory.play()
+
+        } else {
+            audio.loss.play()
+        }
         document.querySelector('#battleDialog').innerHTML = this.name + ' fainted!'
         gsap.to(this.position, {
             y: this.position.y + 20
