@@ -224,7 +224,7 @@ function collistionTest({ rect1, rect2 }) {
     )
 }
 
-const myGuy = 'Emby'
+const myGuy = 'Fiery'
 
 function checkBattleZones(animationID) {
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
@@ -272,8 +272,6 @@ function checkBattleZones(animationID) {
     }
 }
 
-
-
 const movables = [background, ...boundaries, foreground, ...battleZones]
 let animationID
 
@@ -297,7 +295,6 @@ function animate() {
 
 animate()
 
-//Key Action Listener
 let lastKey = ''
 let musicPlaying = false
 

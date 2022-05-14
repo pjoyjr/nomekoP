@@ -25,6 +25,11 @@ const audio = {
         html5: true,
         volume: 0.1
     }),
+    icicle: new Howl({
+        src: 'audio/icicle.wav',
+        html5: true,
+        volume: 0.2
+    }),
     tackleHit: new Howl({
         src: 'audio/tackleHit.wav',
         html5: true,

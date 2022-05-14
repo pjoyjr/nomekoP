@@ -130,6 +130,9 @@ function animateBattle() {
     })
 }
 
+//const avalMonsters1 = Object.keys(monsters)
+//const enemyGuy1 = avalMonsters1[Math.floor(Math.random() * avalMonsters1.length)]
+//initBattle('Octu', 'Octu')
 
 document.querySelector('#battleDialog').addEventListener('click', (e) => {
     if (queue.length > 0) {

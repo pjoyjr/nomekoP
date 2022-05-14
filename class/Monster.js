@@ -69,18 +69,70 @@ class Monster extends Sprite {
         document.querySelector('#battleDialog').innerHTML = this.name + ' used ' + attack.name
 
         let hpBar = '#enemyHPBar'
-        let rotation = 1
-        if (this.isEnemy) {
-            hpBar = '#myHPBar'
-            rotation = -2.5
-        }
+        let rotation
+        if (this.isEnemy) hpBar = '#myHPBar'
 
         recipient.hp -= attack.damage
         if (recipient.hp < 0) recipient.hp = 0
 
         let newHPPercentage
         switch (attack.name) {
+            case 'Icicle':
+                rotation = 2
+                if (this.isEnemy) rotation = 3
+                const icicle = new Sprite({
+                    position: {
+                        x: this.position.x,
+                        y: this.position.y
+                    },
+                    frames: {
+                        max: 4,
+                        hold: 10
+                    },
+                    animate: true,
+                    rotation: rotation
+                })
+                icicle.setImage('./img/attacks/Icicle.png')
+                renderedSprites.splice(1, 0, icicle)
+                newHPPercentage = recipient.hp / (monsters[recipient.name].hp) * 100
+
+                const tl4 = gsap.timeline()
+                gsap.to(icicle.position, {
+                    x: recipient.position.x,
+                    y: recipient.position.y,
+                    onComplete: () => {
+                        audio.icicle.play()
+                        gsap.to(hpBar, {
+                            width: newHPPercentage + '%'
+                        })
+                        if (recipient.isEnemy) {
+                            document.querySelector('#enemyHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        } else {
+                            document.querySelector('#myHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        }
+                        tl4.to(recipient.position, {
+                            x: recipient.position.x + 15,
+                            yoyo: true,
+                            repeat: 2,
+                            duration: .04,
+                        }).to(recipient.position, {
+                            x: recipient.position.x,
+                            yoyo: true,
+                            repeat: 2,
+                            duration: .04,
+                        }).to(recipient, {
+                            opacity: 0,
+                            repeat: 5,
+                            yoyo: true,
+                            duration: .08
+                        })
+                        renderedSprites.splice(1, 1)
+                    }
+                })
+                break
             case 'Fireball':
+                rotation = 1
+                if (this.isEnemy) rotation = -2.5
                 audio.initFireball.play()
                 const fireball = new Sprite({
                     position: {
@@ -94,7 +146,7 @@ class Monster extends Sprite {
                     animate: true,
                     rotation
                 })
-                fireball.setImage('./img/fireball.png')
+                fireball.setImage('./img/attacks/Fireball.png')
                 renderedSprites.splice(1, 0, fireball)
                 newHPPercentage = recipient.hp / (monsters[recipient.name].hp) * 100
                 const tl3 = gsap.timeline()
