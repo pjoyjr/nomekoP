@@ -118,81 +118,14 @@ const keys = {
     }
 }
 
-
-const movables = [background, ...boundaries, foreground, ...battleZones]
-
-function collistionTest({ rect1, rect2 }) {
-    return (rect1.position.x + rect1.width >= rect2.position.x &&
-        rect1.position.x <= rect2.position.x + rect2.width &&
-        rect1.position.y <= rect2.position.y + rect2.height &&
-        rect1.position.y + rect1.height >= rect2.position.y
-    )
-}
-
+//manage transition to battle scene
 const battle = {
     initiated: false
 }
 
-let animationID
-
-function animate() {
-    animationID = window.requestAnimationFrame(animate)
-    background.draw()
-    boundaries.forEach(boundary => {
-        boundary.draw()
-    })
-    battleZones.forEach(battleZone => {
-        battleZone.draw()
-    })
-    player.draw()
-    foreground.draw()
-
+function playerMovement() {
     let moving = true
     player.animate = false
-
-    if (battle.initiated) return
-
-    //Start a battle
-    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-        for (let i = 0; i < battleZones.length; i++) {
-            const battleZone = battleZones[i]
-            const overlappingArea = (Math.min(player.position.x + player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x)) * (Math.min(player.position.y + player.height, battleZone.position.y + battleZone.height) - Math.max(player.position.y, battleZone.position.y))
-
-            if (collistionTest({
-                    rect1: player,
-                    rect2: battleZone
-                }) &&
-                overlappingArea > player.width * player.height / 2 &&
-                Math.random() < .004
-            ) {
-                window.cancelAnimationFrame(animationID)
-                audio.map.stop()
-                audio.initBattle.play()
-                audio.battle.play()
-                battle.initiated = true
-                gsap.to('#overlappingDiv', {
-                    opacity: 1,
-                    repeat: 3,
-                    yoyo: true,
-                    duration: 0.4,
-                    onComplete() {
-                        gsap.to('#overlappingDiv', {
-                            opacity: 1,
-                            duration: 0.4,
-                            onComplete() {
-                                gsap.to('#overlappingDiv', {
-                                    opacity: 0,
-                                    duration: 0.4
-                                })
-                                initBattle()
-                            }
-                        })
-                    }
-                })
-                break
-            }
-        }
-    }
 
     if (keys.w.pressed && lastKey === 'w') {
         player.animate = true
@@ -295,6 +228,81 @@ function animate() {
             })
         }
     }
+}
+
+function collistionTest({ rect1, rect2 }) {
+    return (rect1.position.x + rect1.width >= rect2.position.x &&
+        rect1.position.x <= rect2.position.x + rect2.width &&
+        rect1.position.y <= rect2.position.y + rect2.height &&
+        rect1.position.y + rect1.height >= rect2.position.y
+    )
+}
+
+
+function checkBattleZones(animationID) {
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        for (let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i]
+            const overlappingArea = (Math.min(player.position.x + player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x)) * (Math.min(player.position.y + player.height, battleZone.position.y + battleZone.height) - Math.max(player.position.y, battleZone.position.y))
+
+            if (collistionTest({
+                    rect1: player,
+                    rect2: battleZone
+                }) &&
+                overlappingArea > player.width * player.height / 2 &&
+                Math.random() < .004
+            ) {
+                window.cancelAnimationFrame(animationID)
+                audio.map.stop()
+                audio.initBattle.play()
+                audio.battle.play()
+                battle.initiated = true
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete() {
+                        gsap.to('#overlappingDiv', {
+                            opacity: 1,
+                            duration: 0.4,
+                            onComplete() {
+                                gsap.to('#overlappingDiv', {
+                                    opacity: 0,
+                                    duration: 0.4
+                                })
+                                initBattle()
+                            }
+                        })
+                    }
+                })
+                break
+            }
+        }
+    }
+}
+
+
+
+const movables = [background, ...boundaries, foreground, ...battleZones]
+let animationID
+
+function animate() {
+    animationID = window.requestAnimationFrame(animate)
+    background.draw()
+    boundaries.forEach(boundary => {
+        boundary.draw()
+    })
+    battleZones.forEach(battleZone => {
+        battleZone.draw()
+    })
+    player.draw()
+    foreground.draw()
+
+    if (battle.initiated) return
+
+    checkBattleZones(animationID)
+    playerMovement()
 }
 
 animate()

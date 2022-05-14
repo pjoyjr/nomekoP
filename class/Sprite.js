@@ -1,7 +1,6 @@
 class Sprite {
     constructor({
-        position,
-        velocity,
+        position = { x: 0, y: 0 },
         image,
         frames = { max: 1, hold: 10 },
         sprites,
@@ -20,6 +19,9 @@ class Sprite {
         this.sprites = sprites
         this.opacity = 1
         this.rotation = rotation
+    }
+    setPosition(position) {
+        this.position = position
     }
 
     draw() {

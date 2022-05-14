@@ -22,7 +22,9 @@ function initBattle() {
     document.querySelector('#attacksBox').replaceChildren()
 
     emby = new Monster(monsters.Emby)
+    emby.setIsEnemy(false)
     draggle = new Monster(monsters.Draggle)
+    draggle.setIsEnemy(true)
     renderedSprites = [draggle, emby]
     queue = []
 

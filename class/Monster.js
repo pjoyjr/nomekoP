@@ -1,7 +1,5 @@
 class Monster extends Sprite {
     constructor({
-        position,
-        velocity,
         image,
         frames = { max: 1, hold: 10 },
         sprites,
@@ -9,12 +7,10 @@ class Monster extends Sprite {
         rotation = 0,
         name,
         hp = 100,
-        isEnemy = false,
+        isEnemy,
         attacks
     }) {
         super({
-            position,
-            velocity,
             image,
             frames,
             sprites,
@@ -26,7 +22,22 @@ class Monster extends Sprite {
         this.isEnemy = isEnemy
         this.attacks = attacks
     }
-
+    setIsEnemy(isEnemy) {
+        let position
+        if (isEnemy) {
+            position = {
+                x: 800,
+                y: 100
+            }
+            super.setPosition(position)
+        } else {
+            position = {
+                x: 280,
+                y: 325
+            }
+            super.setPosition(position)
+        }
+    }
     faint() {
         audio.battle.stop()
         audio.victory.play()
