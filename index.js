@@ -109,6 +109,8 @@ const battle = {
     initiated: false
 }
 
+let lastKey = ''
+
 function playerMovement() {
     let moving = true
     player.animate = false
@@ -214,6 +216,76 @@ function playerMovement() {
             })
         }
     }
+
+    //Add dpad Listeners
+    document.querySelector('#dpadU').addEventListener('mouseover', (e) => {
+        keys.w.pressed = true
+        lastKey = 'w'
+    })
+    document.querySelector('#dpadU').addEventListener('mouseout', (e) => {
+        keys.w.pressed = false
+    })
+    document.querySelector('#dpadL').addEventListener('mouseover', (e) => {
+        keys.a.pressed = true
+        lastKey = 'a'
+    })
+    document.querySelector('#dpadL').addEventListener('mouseout', (e) => {
+        keys.a.pressed = false
+    })
+    document.querySelector('#dpadD').addEventListener('mouseover', (e) => {
+        keys.s.pressed = true
+        lastKey = 's'
+    })
+    document.querySelector('#dpadD').addEventListener('mouseout', (e) => {
+        keys.s.pressed = false
+    })
+    document.querySelector('#dpadR').addEventListener('mouseover', (e) => {
+        keys.d.pressed = true
+        lastKey = 'd'
+    })
+    document.querySelector('#dpadR').addEventListener('mouseout', (e) => {
+        keys.d.pressed = false
+    })
+
+
+    //Add keyboard Listeners
+    window.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'w':
+                keys.w.pressed = true
+                lastKey = 'w'
+                break
+            case 'a':
+                keys.a.pressed = true
+                lastKey = 'a'
+                break
+            case 's':
+                keys.s.pressed = true
+                lastKey = 's'
+                break
+            case 'd':
+                keys.d.pressed = true
+                lastKey = 'd'
+                break
+        }
+    })
+
+    window.addEventListener('keyup', (e) => {
+        switch (e.key) {
+            case 'w':
+                keys.w.pressed = false
+                break
+            case 'a':
+                keys.a.pressed = false
+                break
+            case 's':
+                keys.s.pressed = false
+                break
+            case 'd':
+                keys.d.pressed = false
+                break
+        }
+    })
 }
 
 function collistionTest({ rect1, rect2 }) {
@@ -239,6 +311,7 @@ function checkBattleZones(animationID) {
                 overlappingArea > player.width * player.height / 2 &&
                 Math.random() < .004
             ) {
+                document.querySelector('#dpad').style.display = 'none'
                 window.cancelAnimationFrame(animationID)
                 audio.map.stop()
                 audio.initBattle.play()
@@ -293,49 +366,13 @@ function animate() {
     playerMovement()
 }
 
-animate()
-
-let lastKey = ''
 let musicPlaying = false
 
-window.addEventListener('keydown', (e) => {
+window.addEventListener('click', () => {
     if (!musicPlaying) {
         audio.map.play()
         musicPlaying = true
     }
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = true
-            lastKey = 'w'
-            break
-        case 'a':
-            keys.a.pressed = true
-            lastKey = 'a'
-            break
-        case 's':
-            keys.s.pressed = true
-            lastKey = 's'
-            break
-        case 'd':
-            keys.d.pressed = true
-            lastKey = 'd'
-            break
-    }
 })
 
-window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = false
-            break
-        case 'a':
-            keys.a.pressed = false
-            break
-        case 's':
-            keys.s.pressed = false
-            break
-        case 'd':
-            keys.d.pressed = false
-            break
-    }
-})
+animate()

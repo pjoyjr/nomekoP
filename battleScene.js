@@ -21,6 +21,7 @@ function initBattle(myGuy, oppGuy) {
 
     document.querySelector('#battleUI').style.display = 'block'
     document.querySelector('#battleDialog').style.display = 'none'
+    document.querySelector('#attackType').style.display = 'block'
     document.querySelector('#enemyHPBar').style.width = '100%'
     document.querySelector('#myHPBar').style.width = '100%'
     document.querySelector('#myMonsterName').innerHTML = myMonster.name
@@ -38,10 +39,11 @@ function initBattle(myGuy, oppGuy) {
         document.querySelector('#attacksBox').append(button)
     })
 
-
-    //Button Action Listener
+    if (!battle.initiated) return
+        //Button Action Listener
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener(('click'), (e) => {
+            if (!battle.initiated) return
             const selectedAttack = e.currentTarget.innerHTML
             myMonster.attack({
                 attack: attacks[selectedAttack],
@@ -61,12 +63,12 @@ function initBattle(myGuy, oppGuy) {
                             cancelAnimationFrame(battleAnimationID)
                             animate()
                             document.querySelector('#battleUI').style.display = 'none'
+                            document.querySelector('#dpad').style.display = 'block'
 
                             gsap.to('#overlappingDiv', {
                                 opacity: 0
                             })
                             battle.initiated = false
-                            audio.map.play()
                         }
                     })
                 })
@@ -91,8 +93,11 @@ function initBattle(myGuy, oppGuy) {
                             opacity: 1,
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationID)
+
                                 animate()
+                                document.querySelector('#dpad').style.display = 'block'
                                 document.querySelector('#battleUI').style.display = 'none'
+                                document.querySelector('#attackType').style.display = 'none'
 
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0
@@ -105,14 +110,17 @@ function initBattle(myGuy, oppGuy) {
                 }
             })
         })
+
+        let selectAttack
         button.addEventListener('mouseenter', (e) => {
-            const selectAttack = attacks[e.currentTarget.innerHTML]
+            selectAttack = attacks[e.currentTarget.innerHTML]
+            if (!battle.initiated) return
             document.querySelector('#attackType').innerHTML = selectAttack.type
             document.querySelector('#attackType').style.color = selectAttack.color
-
         })
         button.addEventListener('mouseleave', (e) => {
-            const selectAttack = attacks[e.currentTarget.innerHTML]
+            selectAttack = attacks[e.currentTarget.innerHTML]
+            if (!battle.initiated) return
             document.querySelector('#attackType').innerHTML = 'Attack Type'
             document.querySelector('#attackType').style.color = 'black'
 

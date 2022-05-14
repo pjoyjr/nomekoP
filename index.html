@@ -5,51 +5,77 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
-<div id="gameContainer">
-    <!--For flashing/Black screen-->
-    <div id="overlappingDiv"></div>
 
-    <!--Animation Script-->
-    <canvas></canvas>
-    <!--Battle UI-->
-    <div id="battleUI">
-        <!-- Enemy HP bar-->
-        <div class="hpMenu" style="top: 50px; left: 50px;">
-            <h1 id="enemyMonsterName"></h1>
-            <div class="hpBar">
-                <div class="backHPBar"></div>
-                <div id="enemyHPBar"></div>
+<body>
+    <div id="gameContainer">
+        <!--For flashing/Black screen-->
+        <div id="overlappingDiv"></div>
+
+        <!--Animation Script-->
+        <canvas></canvas>
+        <!--Dpad for movement-->
+        <div id="dpad">
+            <div id="dpadBack">
+                <img src="./img/dpad.png" alt="dpad">
             </div>
-            <div class="hpNum">
-                <h3 id="enemyHPNum">100hp</h3>
+            <div id="dpadFront">
+                <div class="dpadSq"></div>
+                <div class="dpadSq">
+                    <button id="dpadU"></button>
+                </div>
+                <div class="dpadSq"></div>
+                <div class="dpadSq">
+                    <button id="dpadL"></button></div>
+                <div class="dpadSq"></div>
+                <div class="dpadSq">
+                    <button id="dpadR"></button></div>
+                <div class="dpadSq"></div>
+                <div class="dpadSq">
+                    <button id="dpadD"></button></div>
+                <div class="dpadSq"></div>
             </div>
         </div>
-
-        <!-- My HP bar-->
-        <div class="hpMenu" style="top: 330px; right: 50px;">
-            <h1 id="myMonsterName"></h1>
-            <div class="hpBar">
-                <div class="backHPBar"></div>
-                <div id="myHPBar"></div>
+        <!--Battle UI-->
+        <div id="battleUI">
+            <!-- Enemy HP bar-->
+            <div class="hpMenu" style="top: 50px; left: 50px;">
+                <h1 id="enemyMonsterName"></h1>
+                <div class="hpBar">
+                    <div class="backHPBar"></div>
+                    <div id="enemyHPBar"></div>
+                </div>
+                <div class="hpNum">
+                    <h3 id="enemyHPNum">100hp</h3>
+                </div>
             </div>
-            <div class="hpNum">
-                <h3 id="myHPNum">10hp</h3>
+
+            <!-- My HP bar-->
+            <div class="hpMenu" style="top: 330px; right: 50px;">
+                <h1 id="myMonsterName"></h1>
+                <div class="hpBar">
+                    <div class="backHPBar"></div>
+                    <div id="myHPBar"></div>
+                </div>
+                <div class="hpNum">
+                    <h3 id="myHPNum">10hp</h3>
+                </div>
+            </div>
+
+            <!--Attack Menu-->
+            <div id="attackMenu">
+                <div id="battleDialog">
+                </div>
+                <div id="attacksBox">
+                </div>
+                <div id="attackTypeDiv">
+                    <h1 id="attackType">Attack Type</h1>
+                </div>
             </div>
         </div>
-
-        <!--Attack Menu-->
-        <div id="attackMenu">
-            <div id="battleDialog">
-            </div>
-            <div id="attacksBox">
-            </div>
-            <div id="attackTypeDiv">
-                <h1 id="attackType">Attack Type</h1>
-            </div>
-        </div>
-
     </div>
-</div>
+
+
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js " integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin=" anonymous " referrerpolicy="no-referrer "></script>
 <script src="data/audio.js "></script>

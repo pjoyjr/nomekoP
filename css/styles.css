@@ -23,6 +23,44 @@ body {
     z-index: 10;
 }
 
+#dpad {
+    z-index: 100;
+    position: absolute;
+    left: 25;
+    bottom: 25;
+    z-index: 100;
+}
+
+#dpadBack {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#dpadFront {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    gap: .5px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.dpadSq {
+    width: 52.3px;
+    height: 52.3px;
+}
+
+.dpadSq button {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
 #battleUI {
     display: none;
 }
