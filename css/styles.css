@@ -6,6 +6,27 @@ body {
     background-color: black;
 }
 
+#gameContainer {
+    display: inline-block;
+    position: relative;
+}
+
+#overlappingDiv {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#battleUI {
+    display: none;
+}
+
 h1 {
     margin: 0;
     font-size: 16px;
@@ -19,11 +40,6 @@ button {
 button:hover {
     background-color: lightgray;
     cursor: pointer;
-}
-
-#gameContainer {
-    display: inline-block;
-    position: relative;
 }
 
 #attackMenu {
@@ -63,8 +79,18 @@ button:hover {
     cursor: pointer;
 }
 
-#battleUI {
-    display: none;
+.hpMenu {
+    background-color: white;
+    width: 250;
+    position: absolute;
+    border: 4px black solid;
+    padding: 12;
+    padding-bottom: 16;
+    height: auto;
+}
+
+.hpBar {
+    position: relative;
 }
 
 #enemyHPBar,
@@ -77,32 +103,19 @@ button:hover {
     right: 0;
 }
 
-#overlappingDiv {
-    background-color: black;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 10;
-}
-
 .backHPBar {
     height: 5px;
     background-color: red;
     margin-top: 10px;
 }
 
-.hpBar {
-    position: relative;
-}
-
-.hpMenu {
-    background-color: white;
-    width: 250;
+.hpNum h3 {
+    margin: 0;
+    margin-right: 20;
+    margin-bottom: 5;
+    font-size: 10px;
     position: absolute;
-    border: 4px black solid;
-    padding: 12px;
+    right: 0;
+    align-content: end;
+    height: 25px;
 }

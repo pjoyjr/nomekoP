@@ -4,8 +4,8 @@ class Monster extends Sprite {
         sprites,
         animate = false,
         rotation = 0,
-        name,
         orderNumber,
+        name,
         hp = 100,
         type,
         attacks,
@@ -17,8 +17,8 @@ class Monster extends Sprite {
             animate,
             rotation
         })
-        this.name = name
         this.orderNumber = orderNumber
+        this.name = name
         this.hp = hp
         this.type = type
         this.isEnemy = isEnemy
@@ -71,6 +71,7 @@ class Monster extends Sprite {
         }
 
         recipient.hp -= attack.damage
+        if (recipient.hp < 0) recipient.hp = 0
 
         let newHPPercentage
         switch (attack.name) {
@@ -100,6 +101,11 @@ class Monster extends Sprite {
                         gsap.to(hpBar, {
                             width: newHPPercentage + '%'
                         })
+                        if (recipient.isEnemy) {
+                            document.querySelector('#enemyHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        } else {
+                            document.querySelector('#myHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        }
                         tl3.to(recipient.position, {
                             x: recipient.position.x + 15,
                             yoyo: true,
@@ -141,6 +147,11 @@ class Monster extends Sprite {
                             width: newHPPercentage + '%'
 
                         })
+                        if (recipient.isEnemy) {
+                            document.querySelector('#enemyHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        } else {
+                            document.querySelector('#myHPNum').innerHTML = recipient.hp + ' / ' + monsters[recipient.name].hp + ' HP'
+                        }
                         tl2.to(recipient.position, {
                             x: recipient.position.x + 15,
                             yoyo: true,

@@ -24,7 +24,9 @@ function initBattle(myGuy, oppGuy) {
     document.querySelector('#enemyHPBar').style.width = '100%'
     document.querySelector('#myHPBar').style.width = '100%'
     document.querySelector('#myMonsterName').innerHTML = myMonster.name
+    document.querySelector('#myHPNum').innerHTML = myMonster.hp + ' / ' + monsters[myMonster.name].hp + ' HP'
     document.querySelector('#enemyMonsterName').innerHTML = enemyMonster.name
+    document.querySelector('#enemyHPNum').innerHTML = enemyMonster.hp + ' / ' + monsters[enemyMonster.name].hp + ' HP'
     document.querySelector('#attacksBox').replaceChildren()
 
     renderedSprites = [enemyMonster, myMonster]
