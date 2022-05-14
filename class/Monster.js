@@ -68,6 +68,7 @@ class Monster extends Sprite {
 
         recipient.hp -= attack.damage
 
+        let newHPPercentage
         switch (attack.name) {
             case 'Fireball':
                 audio.initFireball.play()
@@ -85,7 +86,7 @@ class Monster extends Sprite {
                 })
                 fireball.setImage('./img/fireball.png')
                 renderedSprites.splice(1, 0, fireball)
-
+                newHPPercentage = recipient.hp / (monsters[recipient.name].hp) * 100
                 const tl3 = gsap.timeline()
                 gsap.to(fireball.position, {
                     x: recipient.position.x,
@@ -93,7 +94,7 @@ class Monster extends Sprite {
                     onComplete: () => {
                         audio.fireballHit.play()
                         gsap.to(hpBar, {
-                            width: recipient.hp + '%'
+                            width: newHPPercentage + '%'
                         })
                         tl3.to(recipient.position, {
                             x: recipient.position.x + 15,
@@ -116,6 +117,7 @@ class Monster extends Sprite {
                 })
                 break
             case 'Tackle':
+                newHPPercentage = recipient.hp / (monsters[recipient.name].hp) * 100
                 const tl = gsap.timeline()
                 const tl2 = gsap.timeline()
 
@@ -132,7 +134,7 @@ class Monster extends Sprite {
                         //successful hit, move enemy and substract hp
                         audio.tackleHit.play()
                         gsap.to(hpBar, {
-                            width: recipient.hp + '%'
+                            width: newHPPercentage + '%'
 
                         })
                         tl2.to(recipient.position, {
