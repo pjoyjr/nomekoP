@@ -11,7 +11,7 @@ const battleBackground = new Sprite({
 
 let renderedSprites
 let battleAnimationID
-let emby, draggle
+let myMonster, oppMonster
 let queue
 
 function initBattle() {
@@ -21,14 +21,14 @@ function initBattle() {
     document.querySelector('#myHPBar').style.width = '100%'
     document.querySelector('#attacksBox').replaceChildren()
 
-    emby = new Monster(monsters.Emby)
-    emby.setIsEnemy(false)
-    draggle = new Monster(monsters.Draggle)
-    draggle.setIsEnemy(true)
-    renderedSprites = [draggle, emby]
+    myMonster = new Monster(monsters.Emby)
+    myMonster.setIsEnemy(false)
+    oppMonster = new Monster(monsters.Draggle)
+    oppMonster.setIsEnemy(true)
+    renderedSprites = [oppMonster, myMonster]
     queue = []
 
-    emby.attacks.forEach((attack) => {
+    myMonster.attacks.forEach((attack) => {
         const button = document.createElement('button')
         button.innerHTML = attack.name
         document.querySelector('#attacksBox').append(button)
@@ -39,15 +39,15 @@ function initBattle() {
     document.querySelectorAll('button').forEach((button) => {
         button.addEventListener(('click'), (e) => {
             const selectedAttack = e.currentTarget.innerHTML
-            emby.attack({
+            myMonster.attack({
                 attack: attacks[selectedAttack],
-                recipient: draggle,
+                recipient: oppMonster,
                 renderedSprites
             })
 
-            if (draggle.hp <= 0) {
+            if (oppMonster.hp <= 0) {
                 queue.push(() => {
-                    draggle.faint()
+                    oppMonster.faint()
                 })
 
                 queue.push(() => {
@@ -68,18 +68,18 @@ function initBattle() {
                 })
             }
 
-            const randomAttack = draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
+            const randomAttack = oppMonster.attacks[Math.floor(Math.random() * oppMonster.attacks.length)]
             queue.push(() => {
-                draggle.attack({
+                oppMonster.attack({
                     attack: randomAttack,
-                    recipient: emby,
+                    recipient: myMonster,
                     renderedSprites
                 })
 
 
-                if (emby.hp <= 0) {
+                if (myMonster.hp <= 0) {
                     queue.push(() => {
-                        emby.faint()
+                        myMonster.faint()
                     })
 
                     queue.push(() => {

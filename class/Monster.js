@@ -23,6 +23,8 @@ class Monster extends Sprite {
         this.attacks = attacks
     }
     setIsEnemy(isEnemy) {
+        this.isEnemy = isEnemy
+
         let position
         if (isEnemy) {
             position = {

@@ -10,7 +10,7 @@ const monsters = {
         animate: true,
         name: 'Emby',
         hp: 100,
-        attacks: [attacks.Tackle, attacks.Fireball]
+        attacks: [attacks.Fireball]
     },
     Draggle: {
         image: {
