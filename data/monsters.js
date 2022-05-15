@@ -45,6 +45,18 @@ const monsters = {
         name: 'Snake',
         hp: 40,
         type: 'Ground',
+        attacks: [attacks.Tackle, attacks.Fireball]
+    },
+    Gardner: {
+        frames: {
+            max: 4,
+            hold: 25
+        },
+        animate: true,
+        orderNumber: 10,
+        name: 'Gardner',
+        hp: 40,
+        type: 'Ground',
         attacks: [attacks.Tackle]
     },
     Owl: {
