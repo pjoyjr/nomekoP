@@ -94,5 +94,53 @@ const monsters = {
         hp: 30,
         type: 'Ground',
         attacks: [attacks.Tackle]
+    },
+    Spirit: {
+        frames: {
+            max: 4,
+            hold: 25
+        },
+        animate: true,
+        orderNumber: 30,
+        name: 'Spirit',
+        hp: 55,
+        type: 'Ghost',
+        attacks: [attacks.Tackle]
+    },
+    Salmander: {
+        frames: {
+            max: 4,
+            hold: 25
+        },
+        animate: true,
+        orderNumber: 29,
+        name: 'Salmander',
+        hp: 50,
+        type: 'Dragon',
+        attacks: [attacks.Tackle]
+    },
+    Lisard: {
+        frames: {
+            max: 4,
+            hold: 25
+        },
+        animate: true,
+        orderNumber: 28,
+        name: 'Lisard',
+        hp: 50,
+        type: 'Dragon',
+        attacks: [attacks.Tackle]
+    },
+    Quirel: {
+        frames: {
+            max: 4,
+            hold: 25
+        },
+        animate: true,
+        orderNumber: 27,
+        name: 'Quirel',
+        hp: 40,
+        type: 'Normal',
+        attacks: [attacks.Tackle]
     }
 }
