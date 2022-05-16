@@ -35,7 +35,7 @@ class Monster extends Sprite {
                 x: 800,
                 y: 100
             }
-            super.setPosition(position)
+            super.position = position
             super.setImage(image)
         } else {
             image = 'img/monsters/' + this.name + 'Back.png'
@@ -43,7 +43,7 @@ class Monster extends Sprite {
                 x: 280,
                 y: 325
             }
-            super.setPosition(position)
+            super.position = position
             super.setImage(image)
         }
     }

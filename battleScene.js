@@ -41,13 +41,11 @@ function initBattle(myGuy, oppGuy) {
 
         button.addEventListener('mouseenter', (e) => {
             selectAttack = attacks[e.currentTarget.innerHTML]
-            if (!battle.initiated) return
             document.querySelector('#attackType').innerHTML = selectAttack.type
             document.querySelector('#attackType').style.color = selectAttack.color
         })
         button.addEventListener('mouseleave', (e) => {
             selectAttack = attacks[e.currentTarget.innerHTML]
-            if (!battle.initiated) return
             document.querySelector('#attackType').innerHTML = 'Attack Type'
             document.querySelector('#attackType').style.color = 'black'
 
@@ -70,14 +68,14 @@ function initBattle(myGuy, oppGuy) {
                         opacity: 1,
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationID)
-                            animate()
+                            currMap.animate()
                             document.querySelector('#battleUI').style.display = 'none'
                             document.querySelector('#dpad').style.display = 'block'
 
                             gsap.to('#overlappingDiv', {
                                 opacity: 0
                             })
-                            battle.initiated = false
+                            currMap.battle.initiated = false
                         }
                     })
                 })
@@ -100,7 +98,7 @@ function initBattle(myGuy, oppGuy) {
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationID)
 
-                                animate()
+                                currMap.animate()
                                 document.querySelector('#dpad').style.display = 'block'
                                 document.querySelector('#battleUI').style.display = 'none'
                                 document.querySelector('#attackType').style.display = 'none'
@@ -108,7 +106,7 @@ function initBattle(myGuy, oppGuy) {
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0
                                 })
-                                battle.initiated = false
+                                currMap.battle.initiated = false
                                 audio.map.play()
                             }
                         })

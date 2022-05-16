@@ -24,10 +24,6 @@ class Sprite {
         }
     }
 
-    setPosition(position) {
-        this.position = position
-    }
-
     draw() {
         c.save()
         c.translate(this.position.x + this.width / 2, this.position.y + this.height / 2)
