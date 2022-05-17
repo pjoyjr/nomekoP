@@ -28,13 +28,15 @@ const player = new Sprite({
 player.setImage('./img/playerDown.png')
 
 
-//const homeMap = new Map({ player: player, ...maps.home })
+const homeMap = new Map({ player: player, ...maps.home })
 const map1 = new Map({ player: player, ...maps.map1 })
-const currMap = map1
+let currMapIndex = 0
+const avalMaps = [homeMap, map1]
+
 
 function animateMap() {
-    currMap.animationID = window.requestAnimationFrame(animateMap)
-    currMap.animate()
+    avalMaps[currMapIndex].animationID = window.requestAnimationFrame(animateMap)
+    avalMaps[currMapIndex].animate()
 }
 
 animateMap()

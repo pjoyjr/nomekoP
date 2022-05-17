@@ -69,7 +69,7 @@ function initBattle(myGuy, oppGuy) {
                         opacity: 1,
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationID)
-                            currMap.animate()
+                            avalMaps[currMapIndex].animate()
                             battleBackground.opacity = 0
                             document.querySelector('#battleUI').style.display = 'none'
                             document.querySelector('#dpad').style.display = 'block'
@@ -77,7 +77,7 @@ function initBattle(myGuy, oppGuy) {
                             gsap.to('#overlappingDiv', {
                                 opacity: 0
                             })
-                            currMap.battle.initiated = false
+                            avalMaps[currMapIndex].battle.initiated = false
                             audio.map.play()
                         }
                     })
@@ -101,7 +101,7 @@ function initBattle(myGuy, oppGuy) {
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationID)
                                 battleBackground.opacity = 0
-                                currMap.animate()
+                                avalMaps[currMapIndex].animate()
                                 document.querySelector('#dpad').style.display = 'block'
                                 document.querySelector('#battleUI').style.display = 'none'
                                 document.querySelector('#attackType').style.display = 'none'
@@ -109,7 +109,7 @@ function initBattle(myGuy, oppGuy) {
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0
                                 })
-                                currMap.battle.initiated = false
+                                avalMaps[currMapIndex].battle.initiated = false
                                 audio.map.play()
                             }
                         })
