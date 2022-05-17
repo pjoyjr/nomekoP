@@ -20,6 +20,7 @@ function initBattle(myGuy, oppGuy) {
     enemyMonster = new Monster(monsters[oppGuy])
     enemyMonster.setIsEnemy(true)
 
+    battleBackground.opacity = 1
     document.querySelector('#battleUI').style.display = 'block'
     document.querySelector('#battleDialog').style.display = 'none'
     document.querySelector('#attackType').style.display = 'block'
@@ -69,6 +70,7 @@ function initBattle(myGuy, oppGuy) {
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationID)
                             currMap.animate()
+                            battleBackground.opacity = 0
                             document.querySelector('#battleUI').style.display = 'none'
                             document.querySelector('#dpad').style.display = 'block'
 
@@ -76,6 +78,7 @@ function initBattle(myGuy, oppGuy) {
                                 opacity: 0
                             })
                             currMap.battle.initiated = false
+                            audio.battle.play()
                         }
                     })
                 })
@@ -97,7 +100,7 @@ function initBattle(myGuy, oppGuy) {
                             opacity: 1,
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationID)
-
+                                battleBackground.opacity = 0
                                 currMap.animate()
                                 document.querySelector('#dpad').style.display = 'block'
                                 document.querySelector('#battleUI').style.display = 'none'
