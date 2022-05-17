@@ -28,6 +28,7 @@ const player = new Sprite({
 player.setImage('./img/playerDown.png')
 
 
+//const homeMap = new Map({ player: player, ...maps.home })
 const map1 = new Map({ player: player, ...maps.map1 })
 const currMap = map1
 

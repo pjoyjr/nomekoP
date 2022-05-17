@@ -6,8 +6,7 @@ class Map {
         mapHeight,
         backgroundImage,
         foregroundImage,
-        restrictedZonesData,
-        battleZonesData
+        mapData
     }) {
         this.player = player
         this.offset = offset
@@ -23,11 +22,11 @@ class Map {
         this.foreground.setImage(foregroundImage)
 
 
-        this.boundaries = []
-        this.createRestrictedArea(restrictedZonesData)
+        this.mapData = mapData
 
+        this.boundaries = []
         this.battleZones = []
-        this.createBattleZones(battleZonesData)
+        this.createCollisionZones()
 
         this.battle = { initiated: false }
         this.keys = {
@@ -65,37 +64,15 @@ class Map {
         )
     }
 
-    createBattleZones(battleZonesData) {
-        const battleZonesMap = []
-        for (let i = 0; i < battleZonesData.length; i += this.mapWidth) {
-            battleZonesMap.push(battleZonesData.slice(i, this.mapWidth + i))
+    createCollisionZones() {
+        const sizedMap = []
+        for (let i = 0; i < this.mapData.length; i += this.mapWidth) {
+            sizedMap.push(this.mapData.slice(i, this.mapWidth + i))
         }
 
-        battleZonesMap.forEach((row, i) => {
+        sizedMap.forEach((row, i) => {
             row.forEach((symbol, j) => {
-                if (symbol === 1025)
-                    this.battleZones.push(
-                        new Boundary({
-                            position: {
-                                x: j * Boundary.width + this.offset.x,
-                                y: i * Boundary.height + this.offset.y
-                            }
-                        })
-                    )
-            })
-        })
-
-    }
-
-    createRestrictedArea(restrictedZonesData) {
-        const restrictedZones = []
-        for (let i = 0; i < restrictedZonesData.length; i += this.mapWidth) {
-            restrictedZones.push(restrictedZonesData.slice(i, this.mapWidth + i))
-        }
-
-        restrictedZones.forEach((row, i) => {
-            row.forEach((symbol, j) => {
-                if (symbol === 1025)
+                if (symbol === 1025) {
                     this.boundaries.push(
                         new Boundary({
                             position: {
@@ -104,6 +81,19 @@ class Map {
                             }
                         })
                     )
+
+                } else if (symbol === 1026) {
+                    this.battleZones.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + this.offset.x,
+                                y: i * Boundary.height + this.offset.y
+                            }
+                        })
+                    )
+
+                }
+
             })
         })
 
