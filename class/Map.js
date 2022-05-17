@@ -344,7 +344,6 @@ class Map {
                     })) {
                     this.transition.initiated = true
                     this.moving = false
-                    document.querySelector('#dpad').style.display = 'none'
                     window.cancelAnimationFrame(animationID)
                     audio.map.stop()
                     gsap.to('#overlappingDiv', {
