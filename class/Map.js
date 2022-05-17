@@ -8,7 +8,7 @@ class Map {
         backgroundImage,
         foregroundImage,
         mapData,
-        transitionData
+        transition2Map
     }) {
         this.player = player
 
@@ -29,7 +29,7 @@ class Map {
         this.battleZones = []
         this.transitionZones = []
         this.createCollisionZones()
-        this.transitionData = transitionData
+        this.transition2Map = transition2Map
 
         this.battle = { initiated: false }
         this.transition = { initiated: false }
@@ -355,7 +355,17 @@ class Map {
                                 opacity: 0,
                                 duration: 0.4
                             })
-                            currMapIndex = 1
+
+                            console.log('prior current index:' + currMapIndex)
+                            let j = 0
+                            for (j; j < avalMaps.length; j++) {
+                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map) {
+                                    currMapIndex = j
+                                    console.log('found! current j index:' + j)
+                                }
+                                console.log('during current index:' + currMapIndex)
+                                console.log('during current j index:' + j)
+                            }
                             avalMaps[currMapIndex].animate()
                         }
                     })

@@ -10,7 +10,7 @@ const maps = {
         backgroundImage: './img/maps/homeBackground.png',
         foregroundImage: './img/maps/homeForeground.png',
         mapData: homeMapData,
-        transitionData: 'map1'
+        transition2Map: 'map1'
     },
     map1: {
         name: 'map1',
@@ -23,6 +23,6 @@ const maps = {
         backgroundImage: './img/maps/map1Background.png',
         foregroundImage: './img/maps/map1Foreground.png',
         mapData: map1Data,
-        transitionData: 0
+        transition2Map: ''
     }
 }
