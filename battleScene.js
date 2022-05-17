@@ -78,7 +78,7 @@ function initBattle(myGuy, oppGuy) {
                                 opacity: 0
                             })
                             currMap.battle.initiated = false
-                            audio.battle.play()
+                            audio.map.play()
                         }
                     })
                 })
