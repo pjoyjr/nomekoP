@@ -95,13 +95,14 @@ class Map {
                             }
                         })
                     )
-                } else if (symbol === 1027) {
+                } else if (symbol >= 1 && symbol <= 10) {
                     this.transitionZones.push(
                         new Boundary({
                             position: {
                                 x: j * Boundary.width + this.offset.x,
                                 y: i * Boundary.height + this.offset.y
-                            }
+                            },
+                            value: symbol
                         })
                     )
                 }
@@ -337,11 +338,13 @@ class Map {
     checkTransitionZones() {
         if (this.keys.w.pressed || this.keys.a.pressed || this.keys.s.pressed || this.keys.d.pressed) {
             for (let i = 0; i < this.transitionZones.length; i++) {
-                const battleZone = this.transitionZones[i]
+                const transitionZone = this.transitionZones[i]
                 if (this.collisionTest({
                         rect1: this.player,
-                        rect2: battleZone
-                    })) {
+                        rect2: transitionZone
+                    }) &&
+                    avalMaps[currMapIndex].transition2Map[transitionZone.value][1]
+                ) {
                     this.transition.initiated = true
                     this.moving = false
                     window.cancelAnimationFrame(animationID)
@@ -354,16 +357,11 @@ class Map {
                                 opacity: 0,
                                 duration: 0.4
                             })
-
-                            console.log('prior current index:' + currMapIndex)
                             let j = 0
                             for (j; j < avalMaps.length; j++) {
-                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map) {
+                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map[transitionZone.value][0]) {
                                     currMapIndex = j
-                                    console.log('found! current j index:' + j)
                                 }
-                                console.log('during current index:' + currMapIndex)
-                                console.log('during current j index:' + j)
                             }
                             avalMaps[currMapIndex].animate()
                         }
