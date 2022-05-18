@@ -12,14 +12,14 @@ const maps = {
         mapData: homeMapData,
         transition2Map: {
             1: ['map1', true],
-            2: ['map1', false]
+            2: ['map1', true, 'left']
         }
     },
     map1: {
         name: 'map1',
         offset: {
-            x: 0,
-            y: -325
+            x: -1000,
+            y: -1318
         },
         mapWidth: 30,
         mapHeight: 30,

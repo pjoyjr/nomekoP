@@ -348,7 +348,6 @@ class Map {
                     this.transition.initiated = true
                     this.moving = false
                     window.cancelAnimationFrame(animationID)
-                    audio.map.stop()
                     gsap.to('#overlappingDiv', {
                         opacity: 1,
                         duration: 0.4,
@@ -360,10 +359,11 @@ class Map {
                             let j = 0
                             for (j; j < avalMaps.length; j++) {
                                 if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map[transitionZone.value][0]) {
+                                    const playerFacing = avalMaps[currMapIndex].transition2Map[transitionZone.value][2]
+                                    avalMaps[j].player.setImage(avalMaps[j].player.sprites[playerFacing])
                                     currMapIndex = j
                                 }
                             }
-                            avalMaps[currMapIndex].animate()
                         }
                     })
                     break
