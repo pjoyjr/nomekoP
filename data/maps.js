@@ -11,7 +11,7 @@ const maps = {
         foregroundImage: './img/maps/homeForeground.png',
         mapData: homeMapData,
         transition2Map: {
-            1: ['map1', true],
+            1: ['', false, 'left'],
             2: ['map1', true, 'left']
         }
     },
