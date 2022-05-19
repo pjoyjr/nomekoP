@@ -23,7 +23,6 @@ function initBattle(myGuy, oppGuy) {
     battleBackground.opacity = 1
     document.querySelector('#battleUI').style.display = 'block'
     document.querySelector('#battleDialog').style.display = 'none'
-    document.querySelector('#attackType').style.display = 'block'
     document.querySelector('#enemyHPBar').style.width = '100%'
     document.querySelector('#myHPBar').style.width = '100%'
     document.querySelector('#myMonsterName').innerHTML = myMonster.name
@@ -34,6 +33,29 @@ function initBattle(myGuy, oppGuy) {
 
     renderedSprites = [enemyMonster, myMonster]
     queue = []
+
+    //Create run option
+    const runButton = document.querySelector('#runBtn')
+    runButton.addEventListener(('click'), () => {
+        audio.battle.stop()
+        queue = []
+        gsap.to(('#overlappingDiv'), {
+            opacity: 1,
+            onComplete: () => {
+                cancelAnimationFrame(battleAnimationID)
+                battleBackground.opacity = 0
+                document.querySelector('#battleUI').style.display = 'none'
+                document.querySelector('#dpad').style.display = 'block'
+
+                avalMaps[currMapIndex].battle = false
+                avalMaps[currMapIndex].animate()
+                audio.map.play()
+                gsap.to('#overlappingDiv', {
+                    opacity: 0
+                })
+            }
+        })
+    })
 
     myMonster.attacks.forEach((attack) => {
         const button = document.createElement('button')
@@ -77,7 +99,7 @@ function initBattle(myGuy, oppGuy) {
                             gsap.to('#overlappingDiv', {
                                 opacity: 0
                             })
-                            avalMaps[currMapIndex].battle.initiated = false
+                            avalMaps[currMapIndex].battle = false
                             audio.map.play()
                         }
                     })
@@ -104,12 +126,11 @@ function initBattle(myGuy, oppGuy) {
                                 avalMaps[currMapIndex].animate()
                                 document.querySelector('#dpad').style.display = 'block'
                                 document.querySelector('#battleUI').style.display = 'none'
-                                document.querySelector('#attackType').style.display = 'none'
 
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0
                                 })
-                                avalMaps[currMapIndex].battle.initiated = false
+                                avalMaps[currMapIndex].battle = false
                                 audio.map.play()
                             }
                         })
@@ -118,6 +139,7 @@ function initBattle(myGuy, oppGuy) {
             })
         })
     })
+
     animateBattle()
 }
 
@@ -129,10 +151,6 @@ function animateBattle() {
         sprite.draw()
     })
 }
-
-//const avalMonsters1 = Object.keys(monsters)
-//const enemyGuy1 = avalMonsters1[Math.floor(Math.random() * avalMonsters1.length)]
-//initBattle('Octu', 'Octu')
 
 document.querySelector('#battleDialog').addEventListener('click', (e) => {
     if (queue.length > 0) {

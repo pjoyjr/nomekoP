@@ -31,8 +31,8 @@ class Map {
         this.createCollisionZones()
         this.transition2Map = transition2Map
 
-        this.battle = { initiated: false }
-        this.transition = { initiated: false }
+        this.battle = false
+        this.transition = false
         this.keys = {
             w: {
                 pressed: false
@@ -49,7 +49,7 @@ class Map {
         }
         this.lastKey = ''
 
-        this.animationID = 0
+        this.animationID
         this.musicPlaying = false
         this.moving = true
         window.addEventListener('click', () => {
@@ -58,6 +58,14 @@ class Map {
                 this.musicPlaying = true
             }
         })
+    }
+
+    resetKeys() {
+        this.keys.w.pressed = false
+        this.keys.a.pressed = false
+        this.keys.s.pressed = false
+        this.keys.d.pressed = false
+        this.lastKey = ''
     }
 
     collisionTest({ rect1, rect2 }) {
@@ -300,7 +308,7 @@ class Map {
                     overlappingArea > this.player.width * this.player.height / 2 &&
                     Math.random() < .004
                 ) {
-                    this.battle.initiated = true
+                    this.battle = true
                     this.moving = false
                     document.querySelector('#dpad').style.display = 'none'
                     window.cancelAnimationFrame(animationID)
@@ -345,8 +353,9 @@ class Map {
                     }) &&
                     avalMaps[currMapIndex].transition2Map[transitionZone.value][1]
                 ) {
-                    this.transition.initiated = true
-                    this.moving = false
+                    this.transition = true
+                    this.offset.x += 40
+                    this.resetKeys()
                     window.cancelAnimationFrame(animationID)
                     gsap.to('#overlappingDiv', {
                         opacity: 1,
@@ -385,7 +394,7 @@ class Map {
         })
         this.player.draw()
         this.foreground.draw()
-        if (this.battle.initiated || this.transition.initiated) return
+        if (this.battle || this.transition) return
         this.checkBattleZones()
         this.checkTransitionZones()
         this.moving = true

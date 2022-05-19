@@ -91,20 +91,6 @@ button:hover {
     display: flex;
 }
 
-#attackTypeDiv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 33.33%;
-    border-left: 4px black solid;
-}
-
-#attacksBox {
-    width: 66.66%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
 #battleDialog {
     position: absolute;
     top: 0;
@@ -115,6 +101,27 @@ button:hover {
     padding: 12px;
     display: none;
     cursor: pointer;
+}
+
+#attackTypeDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    border-left: 4px black solid;
+}
+
+#runDiv {
+    width: 8.33%;
+    border-left: 4px black solid;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+#attacksBox {
+    width: 66.66%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .hpMenu {
