@@ -31,6 +31,8 @@ class Map {
         this.createCollisionZones()
         this.transition2Map = transition2Map
 
+        this.movables = [...this.boundaries, ...this.transitionZones, this.foreground, ...this.battleZones]
+
         this.battle = false
         this.transition = false
         this.keys = {
@@ -111,7 +113,6 @@ class Map {
     }
 
     playerMovement() {
-        const movables = [...this.boundaries, ...this.transitionZones, this.foreground, ...this.battleZones]
         this.player.animate = false
 
         if (this.keys.w.pressed && this.lastKey === 'w') {
@@ -135,7 +136,7 @@ class Map {
                 }
             }
             if (this.moving) {
-                movables.forEach((movable) => {
+                this.movables.forEach((movable) => {
                     movable.position.y += 3
                 })
             }
@@ -160,7 +161,7 @@ class Map {
                 }
             }
             if (this.moving) {
-                movables.forEach((movable) => {
+                this.movables.forEach((movable) => {
                     movable.position.x += 3
                 })
             }
@@ -185,7 +186,7 @@ class Map {
                 }
             }
             if (this.moving) {
-                movables.forEach((movable) => {
+                this.movables.forEach((movable) => {
                     movable.position.y -= 3
                 })
             }
@@ -210,7 +211,7 @@ class Map {
                 }
             }
             if (this.moving) {
-                movables.forEach((movable) => {
+                this.movables.forEach((movable) => {
                     movable.position.x -= 3
                 })
             }
@@ -362,6 +363,10 @@ class Map {
                                 }
                             }
                         }
+                    })
+
+                    this.movables.forEach((movable) => {
+                        movable.position.x += 6
                     })
                     break
                 }
