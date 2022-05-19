@@ -33,7 +33,6 @@ const map1 = new Map({ player: player, ...maps.map1 })
 let currMapIndex = 0
 const avalMaps = [homeMap, map1]
 
-
 function animateMap() {
     avalMaps[currMapIndex].animationID = window.requestAnimationFrame(animateMap)
     avalMaps[currMapIndex].animate()

@@ -60,15 +60,98 @@ class Map {
                 this.musicPlaying = true
             }
         })
+        this.setupMovementActionListeners()
     }
 
-    resetKeys() {
-        this.keys.pressed.w = false
-        this.keys.pressed.a = false
-        this.keys.pressed.s = false
-        this.keys.pressed.d = false
-        this.lastKey = ''
+    setupMovementActionListeners() {
+
+        //Add keyboard Listeners
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'w':
+                    this.keys.w.pressed = true
+                    this.lastKey = 'w'
+                    break
+                case 'a':
+                    this.keys.a.pressed = true
+                    this.lastKey = 'a'
+                    break
+                case 's':
+                    this.keys.s.pressed = true
+                    this.lastKey = 's'
+                    break
+                case 'd':
+                    this.keys.d.pressed = true
+                    this.lastKey = 'd'
+                    break
+            }
+        })
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'w':
+                    this.keys.w.pressed = false
+                    break
+                case 'a':
+                    this.keys.a.pressed = false
+                    break
+                case 's':
+                    this.keys.s.pressed = false
+                    break
+                case 'd':
+                    this.keys.d.pressed = false
+                    break
+            }
+        })
+
+        document.querySelector('#dpadU').addEventListener('mousedown', () => {
+            this.keys.w.pressed = true
+            this.lastKey = 'w'
+        })
+        document.querySelector('#dpadL').addEventListener('mousedown', () => {
+            this.keys.a.pressed = true
+            this.lastKey = 'a'
+        })
+        document.querySelector('#dpadD').addEventListener('mousedown', () => {
+            this.keys.s.pressed = true
+            this.lastKey = 's'
+        })
+        document.querySelector('#dpadR').addEventListener('mousedown', () => {
+            this.keys.d.pressed = true
+            this.lastKey = 'd'
+        })
+        window.addEventListener('mouseup', () => {
+            this.keys.w.pressed = false
+            this.keys.a.pressed = false
+            this.keys.s.pressed = false
+            this.keys.d.pressed = false
+        })
+
+        //
+        document.querySelector('#dpadU').addEventListener('touchstart', () => {
+            this.keys.w.pressed = true
+            this.lastKey = 'w'
+        })
+        document.querySelector('#dpadL').addEventListener('touchstart', () => {
+            this.keys.a.pressed = true
+            this.lastKey = 'a'
+        })
+        document.querySelector('#dpadD').addEventListener('touchstart', () => {
+            this.keys.s.pressed = true
+            this.lastKey = 's'
+        })
+        document.querySelector('#dpadR').addEventListener('touchstart', () => {
+            this.keys.d.pressed = true
+            this.lastKey = 'd'
+        })
+        window.addEventListener('touchend', () => {
+            this.keys.w.pressed = false
+            this.keys.a.pressed = false
+            this.keys.s.pressed = false
+            this.keys.d.pressed = false
+        })
     }
+
     collisionTest({ rect1, rect2 }) {
         return (rect1.position.x + rect1.width >= rect2.position.x &&
             rect1.position.x <= rect2.position.x + rect2.width &&
@@ -223,76 +306,6 @@ class Map {
                 })
             }
         }
-
-        //Add dpad Listeners
-        document.querySelector('#dpadU').addEventListener('mouseover', (e) => {
-            this.keys.w.pressed = true
-            this.lastKey = 'w'
-        })
-        document.querySelector('#dpadU').addEventListener('mouseout', (e) => {
-            this.keys.w.pressed = false
-        })
-        document.querySelector('#dpadL').addEventListener('mouseover', (e) => {
-            this.keys.a.pressed = true
-            this.lastKey = 'a'
-        })
-        document.querySelector('#dpadL').addEventListener('mouseout', (e) => {
-            this.keys.a.pressed = false
-        })
-        document.querySelector('#dpadD').addEventListener('mouseover', (e) => {
-            this.keys.s.pressed = true
-            this.lastKey = 's'
-        })
-        document.querySelector('#dpadD').addEventListener('mouseout', (e) => {
-            this.keys.s.pressed = false
-        })
-        document.querySelector('#dpadR').addEventListener('mouseover', (e) => {
-            this.keys.d.pressed = true
-            this.lastKey = 'd'
-        })
-        document.querySelector('#dpadR').addEventListener('mouseout', (e) => {
-            this.keys.d.pressed = false
-        })
-
-
-        //Add keyboard Listeners
-        window.addEventListener('keydown', (e) => {
-            switch (e.key) {
-                case 'w':
-                    this.keys.w.pressed = true
-                    this.lastKey = 'w'
-                    break
-                case 'a':
-                    this.keys.a.pressed = true
-                    this.lastKey = 'a'
-                    break
-                case 's':
-                    this.keys.s.pressed = true
-                    this.lastKey = 's'
-                    break
-                case 'd':
-                    this.keys.d.pressed = true
-                    this.lastKey = 'd'
-                    break
-            }
-        })
-
-        window.addEventListener('keyup', (e) => {
-            switch (e.key) {
-                case 'w':
-                    this.keys.w.pressed = false
-                    break
-                case 'a':
-                    this.keys.a.pressed = false
-                    break
-                case 's':
-                    this.keys.s.pressed = false
-                    break
-                case 'd':
-                    this.keys.d.pressed = false
-                    break
-            }
-        })
     }
 
     checkZones() {
@@ -349,7 +362,6 @@ class Map {
                     avalMaps[currMapIndex].transition2Map[transitionZone.value][1] && !this.transition
                 ) {
                     this.transition = true
-                    this.resetKeys()
                     window.cancelAnimationFrame(animationID)
                     gsap.to('#overlappingDiv', {
                         opacity: 1,
