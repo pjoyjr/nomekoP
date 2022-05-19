@@ -47,12 +47,13 @@ function initBattle(myGuy, oppGuy) {
                 document.querySelector('#battleUI').style.display = 'none'
                 document.querySelector('#dpad').style.display = 'block'
 
-                avalMaps[currMapIndex].battle = false
                 avalMaps[currMapIndex].animate()
                 audio.map.play()
                 gsap.to('#overlappingDiv', {
                     opacity: 0
                 })
+                avalMaps[currMapIndex].battle = false
+                audio.map.play()
             }
         })
     })

@@ -60,14 +60,6 @@ class Map {
         })
     }
 
-    resetKeys() {
-        this.keys.w.pressed = false
-        this.keys.a.pressed = false
-        this.keys.s.pressed = false
-        this.keys.d.pressed = false
-        this.lastKey = ''
-    }
-
     collisionTest({ rect1, rect2 }) {
         return (rect1.position.x + rect1.width >= rect2.position.x &&
             rect1.position.x <= rect2.position.x + rect2.width &&
@@ -295,7 +287,7 @@ class Map {
         })
     }
 
-    checkBattleZones() {
+    checkZones() {
         if (this.keys.w.pressed || this.keys.a.pressed || this.keys.s.pressed || this.keys.d.pressed) {
             for (let i = 0; i < this.battleZones.length; i++) {
                 const battleZone = this.battleZones[i]
@@ -340,22 +332,15 @@ class Map {
                     break
                 }
             }
-        }
-    }
-
-    checkTransitionZones() {
-        if (this.keys.w.pressed || this.keys.a.pressed || this.keys.s.pressed || this.keys.d.pressed) {
             for (let i = 0; i < this.transitionZones.length; i++) {
                 const transitionZone = this.transitionZones[i]
                 if (this.collisionTest({
                         rect1: this.player,
                         rect2: transitionZone
                     }) &&
-                    avalMaps[currMapIndex].transition2Map[transitionZone.value][1]
+                    avalMaps[currMapIndex].transition2Map[transitionZone.value][1] && !this.transition
                 ) {
                     this.transition = true
-                    this.offset.x += 40
-                    this.resetKeys()
                     window.cancelAnimationFrame(animationID)
                     gsap.to('#overlappingDiv', {
                         opacity: 1,
@@ -366,11 +351,14 @@ class Map {
                                 duration: 0.4
                             })
                             let j = 0
+                            let found = false
                             for (j; j < avalMaps.length; j++) {
-                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map[transitionZone.value][0]) {
+                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map[transitionZone.value][0] && !found) {
                                     const playerFacing = avalMaps[currMapIndex].transition2Map[transitionZone.value][2]
                                     avalMaps[j].player.setImage(avalMaps[j].player.sprites[playerFacing])
                                     currMapIndex = j
+                                    avalMaps[currMapIndex].transition = false
+                                    found = true
                                 }
                             }
                         }
@@ -395,8 +383,7 @@ class Map {
         this.player.draw()
         this.foreground.draw()
         if (this.battle || this.transition) return
-        this.checkBattleZones()
-        this.checkTransitionZones()
+        this.checkZones()
         this.moving = true
         this.playerMovement()
     }
