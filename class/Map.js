@@ -51,6 +51,29 @@ class Map {
         }
         this.lastKey = ''
 
+        this.wasd = {
+            'w': {
+                spriteImage: 'up',
+                x: 0,
+                y: 3
+            },
+            'a': {
+                spriteImage: 'left',
+                x: 3,
+                y: 0
+            },
+            's': {
+                spriteImage: 'down',
+                x: 0,
+                y: -3
+            },
+            'd': {
+                spriteImage: 'right',
+                x: -3,
+                y: 0
+            },
+        }
+
         this.animationID
         this.musicPlaying = false
         this.moving = true
@@ -204,10 +227,12 @@ class Map {
 
     playerMovement() {
         this.player.animate = false
-
-        if (this.keys.w.pressed && this.lastKey === 'w') {
+        if ((this.keys.w.pressed && this.lastKey === 'w') ||
+            (this.keys.a.pressed && this.lastKey === 'a') ||
+            (this.keys.s.pressed && this.lastKey === 's') ||
+            (this.keys.d.pressed && this.lastKey === 'd')) {
             this.player.animate = true
-            this.player.setImage(this.player.sprites.up)
+            this.player.setImage(this.player.sprites[this.wasd[this.lastKey].spriteImage])
             for (let i = 0; i < this.boundaries.length; i++) {
                 const boundary = this.boundaries[i]
                 if (
@@ -215,8 +240,8 @@ class Map {
                         rect1: this.player,
                         rect2: {...boundary,
                             position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y + 3
+                                x: boundary.position.x + this.wasd[this.lastKey].x,
+                                y: boundary.position.y + this.wasd[this.lastKey].y
                             }
                         }
                     })
@@ -227,82 +252,8 @@ class Map {
             }
             if (this.moving) {
                 this.movables.forEach((movable) => {
-                    movable.position.y += 3
-                })
-            }
-        } else if (this.keys.a.pressed && this.lastKey === 'a') {
-            this.player.animate = true
-            this.player.setImage(this.player.sprites.left)
-            for (let i = 0; i < this.boundaries.length; i++) {
-                const boundary = this.boundaries[i]
-                if (
-                    this.collisionTest({
-                        rect1: this.player,
-                        rect2: {...boundary,
-                            position: {
-                                x: boundary.position.x + 3,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    this.moving = false
-                    break
-                }
-            }
-            if (this.moving) {
-                this.movables.forEach((movable) => {
-                    movable.position.x += 3
-                })
-            }
-        } else if (this.keys.s.pressed && this.lastKey === 's') {
-            this.player.animate = true
-            this.player.setImage(this.player.sprites.down)
-            for (let i = 0; i < this.boundaries.length; i++) {
-                const boundary = this.boundaries[i]
-                if (
-                    this.collisionTest({
-                        rect1: this.player,
-                        rect2: {...boundary,
-                            position: {
-                                x: boundary.position.x,
-                                y: boundary.position.y - 3
-                            }
-                        }
-                    })
-                ) {
-                    this.moving = false
-                    break
-                }
-            }
-            if (this.moving) {
-                this.movables.forEach((movable) => {
-                    movable.position.y -= 3
-                })
-            }
-        } else if (this.keys.d.pressed && this.lastKey === 'd') {
-            this.player.animate = true
-            this.player.setImage(this.player.sprites.right)
-            for (let i = 0; i < this.boundaries.length; i++) {
-                const boundary = this.boundaries[i]
-                if (
-                    this.collisionTest({
-                        rect1: this.player,
-                        rect2: {...boundary,
-                            position: {
-                                x: boundary.position.x - 3,
-                                y: boundary.position.y
-                            }
-                        }
-                    })
-                ) {
-                    this.moving = false
-                    break
-                }
-            }
-            if (this.moving) {
-                this.movables.forEach((movable) => {
-                    movable.position.x -= 3
+                    movable.position.x += this.wasd[this.lastKey].x
+                    movable.position.y += this.wasd[this.lastKey].y
                 })
             }
         }
