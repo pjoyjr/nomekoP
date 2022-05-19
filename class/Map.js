@@ -62,6 +62,13 @@ class Map {
         })
     }
 
+    resetKeys() {
+        this.keys.pressed.w = false
+        this.keys.pressed.a = false
+        this.keys.pressed.s = false
+        this.keys.pressed.d = false
+        this.lastKey = ''
+    }
     collisionTest({ rect1, rect2 }) {
         return (rect1.position.x + rect1.width >= rect2.position.x &&
             rect1.position.x <= rect2.position.x + rect2.width &&
@@ -342,6 +349,7 @@ class Map {
                     avalMaps[currMapIndex].transition2Map[transitionZone.value][1] && !this.transition
                 ) {
                     this.transition = true
+                    this.resetKeys()
                     window.cancelAnimationFrame(animationID)
                     gsap.to('#overlappingDiv', {
                         opacity: 1,
