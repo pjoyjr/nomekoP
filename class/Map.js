@@ -224,7 +224,6 @@ class Map {
             (this.keys.a.pressed && this.lastKey === 'a') ||
             (this.keys.s.pressed && this.lastKey === 's') ||
             (this.keys.d.pressed && this.lastKey === 'd')) {
-            this.player.animate = true
             this.player.setImage(this.player.sprites[this.wasd[this.lastKey].spriteImage])
             for (let i = 0; i < this.boundaries.length; i++) {
                 const boundary = this.boundaries[i]
@@ -240,10 +239,12 @@ class Map {
                     })
                 ) {
                     this.moving = false
+                    this.player.animate = false
                     break
                 }
             }
             if (this.moving) {
+                this.player.animate = true
                 this.movables.forEach((movable) => {
                     movable.position.x += this.wasd[this.lastKey].x
                     movable.position.y += this.wasd[this.lastKey].y
@@ -253,7 +254,7 @@ class Map {
     }
 
     checkZones() {
-        if (this.keys.w.pressed || this.keys.a.pressed || this.keys.s.pressed || this.keys.d.pressed) {
+        if ((this.keys.w.pressed || this.keys.a.pressed || this.keys.s.pressed || this.keys.d.pressed) && this.moving) {
             for (let i = 0; i < this.battleZones.length; i++) {
                 const battleZone = this.battleZones[i]
                 const overlappingArea = (Math.min(this.player.position.x + this.player.width, battleZone.position.x + battleZone.width) - Math.max(this.player.position.x, battleZone.position.x)) * (Math.min(this.player.position.y + this.player.height, battleZone.position.y + battleZone.height) - Math.max(this.player.position.y, battleZone.position.y))
