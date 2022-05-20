@@ -11,8 +11,24 @@ const maps = {
         foregroundImage: './img/maps/homeForeground.png',
         mapData: homeMapData,
         transition2Map: {
-            1: ['map1', false, 'left'],
-            2: ['map1', true, 'left']
+            1: ['oldManHome', true, 'up', 0, -6],
+            2: ['map1', true, 'left', 6, 0]
+        }
+    },
+    oldManHome: {
+        name: 'oldManHome',
+        offset: {
+            x: -208,
+            y: -670
+        },
+        mapWidth: 24,
+        mapHeight: 18,
+        backgroundImage: './img/maps/oldManHomeBackground.png',
+        foregroundImage: './img/maps/oldManHomeForeground.png',
+        mapData: oldManHomeMapData,
+        transition2Map: {
+            1: ['home', true, 'down', 0, 6],
+            2: ['', false, '', 0, 0]
         }
     },
     map1: {
@@ -27,7 +43,7 @@ const maps = {
         foregroundImage: './img/maps/map1Foreground.png',
         mapData: map1Data,
         transition2Map: {
-            1: ['home', true, 'left']
+            1: ['home', true, 'left', 6, 0]
         }
     }
 }

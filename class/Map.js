@@ -75,14 +75,7 @@ class Map {
         }
 
         this.animationID
-        this.musicPlaying = false
         this.moving = true
-        window.addEventListener('click', () => {
-            if (!this.musicPlaying) {
-                audio.map.play()
-                this.musicPlaying = true
-            }
-        })
         this.setupMovementActionListeners()
     }
 
@@ -312,6 +305,8 @@ class Map {
                     }) &&
                     avalMaps[currMapIndex].transition2Map[transitionZone.value][1] && !this.transition
                 ) {
+                    let xOffset = avalMaps[currMapIndex].transition2Map[transitionZone.value][3]
+                    let yOffset = avalMaps[currMapIndex].transition2Map[transitionZone.value][4]
                     this.transition = true
                     window.cancelAnimationFrame(animationID)
                     gsap.to('#overlappingDiv', {
@@ -322,11 +317,12 @@ class Map {
                                 opacity: 0,
                                 duration: 0.4
                             })
+                            const nextMapName = avalMaps[currMapIndex].transition2Map[transitionZone.value][0]
+                            const playerFacing = avalMaps[currMapIndex].transition2Map[transitionZone.value][2]
                             let j = 0
                             let found = false
                             for (j; j < avalMaps.length; j++) {
-                                if (avalMaps[j].name === avalMaps[currMapIndex].transition2Map[transitionZone.value][0] && !found) {
-                                    const playerFacing = avalMaps[currMapIndex].transition2Map[transitionZone.value][2]
+                                if (avalMaps[j].name === nextMapName && !found) {
                                     avalMaps[j].player.setImage(avalMaps[j].player.sprites[playerFacing])
                                     currMapIndex = j
                                     avalMaps[currMapIndex].transition = false
@@ -337,7 +333,8 @@ class Map {
                     })
 
                     this.movables.forEach((movable) => {
-                        movable.position.x += 6
+                        movable.position.x += xOffset
+                        movable.position.y += yOffset
                     })
                     break
                 }

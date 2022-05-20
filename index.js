@@ -29,13 +29,22 @@ player.setImage('./img/playerDown.png')
 
 
 const homeMap = new Map({ player: player, ...maps.home })
+const oldManHomeMap = new Map({ player: player, ...maps.oldManHome })
 const map1 = new Map({ player: player, ...maps.map1 })
 let currMapIndex = 0
-const avalMaps = [homeMap, map1]
+const avalMaps = [homeMap, oldManHomeMap, map1]
+let musicPlaying = false
 
 function animateMap() {
     avalMaps[currMapIndex].animationID = window.requestAnimationFrame(animateMap)
     avalMaps[currMapIndex].animate()
 }
+
+window.addEventListener('click', () => {
+    if (!musicPlaying) {
+        audio.map.play()
+        musicPlaying = true
+    }
+})
 
 animateMap()

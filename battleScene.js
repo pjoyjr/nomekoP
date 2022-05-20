@@ -48,7 +48,6 @@ function initBattle(myGuy, oppGuy) {
                 document.querySelector('#dpad').style.display = 'block'
 
                 avalMaps[currMapIndex].animate()
-                audio.map.play()
                 gsap.to('#overlappingDiv', {
                     opacity: 0
                 })
